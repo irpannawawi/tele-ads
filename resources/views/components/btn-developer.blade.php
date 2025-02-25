@@ -1,0 +1,1 @@
+<button id="developer" onclick="showRatePointInfo()">Cek Tarif</button>

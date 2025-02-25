@@ -1,0 +1,395 @@
+
+  /* Style yang sudah ada tetap digunakan */
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #F8F8FF;
+    color: #000000;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  header {
+    background-color: #007bff;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 10;
+  }
+  
+
+  /* CSS untuk animasi berkelap kelip */
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Tombol Withdraw yang berkelap kelip */
+  .blink-button {
+    animation:  infinite;
+    background-color: #48D1CC;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.10s ease;
+  }
+
+  /* Bagian Baru - Welcome Section */
+  .welcome-section {
+    background-color: #F0FFFF;
+    /* Warna latar biru muda */
+    width: 100%;
+    /* Lebar penuh untuk semua perangkat */
+    text-align: center;
+    /* Pusatkan teks */
+    padding: 12px 0;
+    /* Padding default */
+    font-size: 27px;
+    /* Ukuran font default */
+    font-weight: bold;
+    /* Teks bold */
+    color: #87CEFA;
+    /* Warna teks hitam */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    /* Bayangan untuk efek */
+    position: fixed;
+    /* Tetap di atas layar */
+    top: 0;
+    /* Tetap di atas layar */
+    z-index: 10;
+    /* Tetap di atas elemen lainnya */
+  }
+
+  /* Animasi warna berganti dan berkelap-kelip */
+  @keyframes colorBlink {
+    0% {
+      color: #FF0000;
+    }
+
+    /* Merah */
+    25% {
+      color: #00FF00;
+    }
+
+    /* Hijau */
+    50% {
+      color: #0000FF;
+    }
+
+    /* Biru */
+    75% {
+      color: #FFFF00;
+    }
+
+    /* Kuning */
+    100% {
+      color: #FF0000;
+    }
+
+    /* Kembali ke Merah */
+  }
+
+  .welcome-section h2 {
+    font-size: 30px;
+    /* Ukuran font heading default */
+    color: #000000;
+    /* Warna teks heading */
+    font-weight: bold;
+    /* Heading bold */
+    margin: 0;
+    /* Hilangkan margin default */
+    animation: colorBlink 10s infinite;
+    /* Animasi kelap-kelip */
+  }
+
+  .welcome-section p {
+    font-size: 15px;
+    color: #000000;
+    line-height: 1;
+    /* Atur jarak antar baris */
+    margin-top: 0px;
+    /* Hilangkan margin antar paragraf */
+  }
+
+  .container {
+    text-align: center;
+    background: #F0FFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .container h1 {
+    font-size: 20px;
+    color: #87CEFA;
+    margin-bottom: 10px;
+  }
+
+  .stats {
+    margin: 10px 0;
+  }
+
+  .stats p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  .progress-circle {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #87CEFA;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+  }
+
+  .progress-circle span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .buttons button {
+    width: 90%;
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    color: #191970;
+    background: #87CEEB;
+    cursor: pointer;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    /* Tombol akan menyesuaikan lebar kontainer */
+    max-width: 300px;
+    /* Maksimal lebar tombol */
+    box-sizing: border-box;
+    /* Pastikan padding dihitung dalam lebar tombol */
+  }
+
+  button:hover {
+    background-color: #0000FF;
+    /* Efek hover */
+  }
+
+  .buttons button:hover {
+    background: #DAA520;
+    /* Warna hover */
+  }
+
+  .withdraw-section {
+    margin-top: 20px;
+    display: none;
+    padding: 20px;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .form-container {
+    display: flex;
+    gap: 10px;
+    /* Jarak antar elemen */
+    align-items: center;
+  }
+
+  .form-container input[type="number"],
+  .form-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    /* Kotak menyesuaikan ukuran */
+  }
+
+  .form-container input:focus,
+  .form-container select:focus {
+    border-color: #87CEFA;
+    outline: none;
+  }
+
+  /* Form khusus untuk input nomor telepon */
+  .form-container-phone {
+    display: flex;
+    justify-content: center;
+    /* Center input */
+    margin-bottom: 20px;
+    margin-top: 10px;
+    /* Menambahkan margin atas agar ada jarak dengan form sebelumnya */
+  }
+
+  .form-container-phone input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    /* Lebar input telepon sekarang sama dengan tombol */
+  }
+
+  #withdraw-status,
+  #withdraw-status-failed,
+  #withdraw-status-success {
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  #withdraw-status-failed {
+    color: red;
+    display: none;
+    background-color: rgba(255, 0, 0, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  #withdraw-status-success {
+    color: #48D1CC;
+    display: none;
+    background-color: rgba(22, 100, 123, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .go-back-btn {
+    margin-top: 10px;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+
+  .go-back-btn:hover {
+    background-color: #666;
+  }
+
+  #floating-notification1 {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 123, 255, 0.8);
+    color: white;
+    padding: 11px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: none;
+    z-index: 1000;
+    transition: bottom 0.5s ease-in-out;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .user-info {
+    margin-top: 20px;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+
+  .withdraw-history {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .withdraw-history h3 {
+    text-align: center;
+    color: #ff5722;
+  }
+
+  .withdraw-history ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .withdraw-history li {
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .withdraw-history button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .withdraw-history button:hover {
+    background-color: #e64a19;
+  }
+
+  #logo-e-wallet > ul {
+    display: flex; align-content: space-between; justify-content: space-between; list-style: none; padding:0px; padding-left: 30px; padding-right: 30px;
+  }
+
+  #floating-notification1 {
+    text-align: center;
+    /* Centers the text horizontally */
+    width: 75%;
+    /* Adjust width as necessary */
+    padding: 11px 10px;
+    /* Add padding for better spacing */
+    background-color: #121212;
+    /* Optional background for visibility */
+    border: 1px solid #ddd;
+    /* Optional border for styling */
+  }
+
+  p {
+    margin: 5px 0;
+    /* Optional: Adjusts spacing between paragraphs */
+  }
