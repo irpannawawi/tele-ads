@@ -1,0 +1,158 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\LogWatch;
+use App\Models\TgUser;
+use App\Models\Withdraw;
+use Illuminate\Container\Attributes\Log;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
+class TgController extends Controller
+{
+    public function getUser(Request $request)
+    {
+
+        $request->validate([
+            'phone' => 'required',
+            'first_name' => 'required',
+        ]);
+        $phone = $request->phone;
+        TgUser::updateOrInsert([
+            'phone' => $request->phone
+        ], [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'username' => $request->username,
+        ]);
+        $log = LogWatch::where('phone', $request->phone);
+        $withdraw = Withdraw::where('phone', $phone);
+
+        return response()->json([
+            'success' => true,
+            'user' => TgUser::where('phone', $request->phone)->first(),
+            'watched_today' => $log->where('created_at', '>=', Carbon::now()->startOfDay())->count(),
+            'all_withdrawals' => $withdraw->orderBy('created_at', 'desc')->get(),
+            'withdraw' => Withdraw::where('phone', $request->phone)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
+    public function getUserByPhone($phone)
+    {
+        TgUser::where([
+            'phone' => $phone
+        ])->first();
+        $log = LogWatch::where('phone', $phone);
+        $withdraw = Withdraw::where('phone', $phone);
+
+        return response()->json([
+            'success' => true,
+            'user' => TgUser::where('phone', $phone)->first(),
+            'watched_today' => $log->where('created_at', '>=', Carbon::now()->startOfDay())->count(),
+            'all_withdrawals' => $withdraw->orderBy('created_at', 'desc')->get(),
+            'withdraw' => Withdraw::where('phone', $phone)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
+
+    public function watchAds(Request $request)
+    {
+        $phone = $request->phone;
+        // insert log
+        LogWatch::create([
+            'phone' => $phone
+        ]);
+        $user = TgUser::where('phone', $phone)->first();
+        $user->watched_ads_count = LogWatch::where('phone', $phone)->count();
+        $user->earned_points += env('POINTS_PER_AD');
+        $user->save();
+
+
+        $log = LogWatch::where('phone', $phone);
+        $withdraw = Withdraw::where('phone', $phone);
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+            'watched_today' => $log->where('created_at', '>=', Carbon::now()->startOfDay())->count(),
+            'all_withdrawals' => $withdraw->orderBy('created_at', 'desc')->get()
+        ]);
+    }
+
+
+    public function requestWithdraw(Request $request)
+    {
+        $phone = $request->phone;
+        $amount = $request->amount;
+        $method = $request->method;
+
+        $user = TgUser::where('phone', $phone)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ]);
+        }
+
+
+        if ($user->earned_points < $amount) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Insufficient balance'
+            ]);
+        }
+
+        if ($amount < env('MIN_WITHDRAW_POINTS')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Minimum withdraw amount is ' . env('MIN_WITHDRAW_POINTS')
+            ]);
+        }
+
+
+        $user->earned_points -= $amount;
+        $user->total_withdraw += $amount;
+        $user->save();
+
+        Withdraw::create([
+            'phone' => $phone,
+            'address' => $request->address,
+            'amount' => $amount,
+            'method' => $method,
+            'status' => 'pending',
+        ]);
+
+        $log = LogWatch::where('phone', $phone);
+        $withdraw = Withdraw::where('phone', $phone);
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+            'message' => 'Withdrawal request sent successfully',
+            'withdraw' => Withdraw::where('phone', $phone)->orderBy('created_at', 'desc')->get(),
+            'watched_today' => $log->where('created_at', '>=', Carbon::now()->startOfDay())->count(),
+            'all_withdrawals' => $withdraw->orderBy('created_at', 'desc')->get()
+        ]);
+    }
+
+
+    public function limitCheck(Request $request)
+    {
+        $phone = $request->phone;
+        $user = TgUser::where('phone', $phone)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ]);
+        }
+
+        $history = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+            'history' => $history
+        ]);
+    }
+}
