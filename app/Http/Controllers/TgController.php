@@ -8,7 +8,7 @@ use App\Models\Withdraw;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-
+use Telegram\Bot\Api;
 class TgController extends Controller
 {
     public function getUser(Request $request)
@@ -28,7 +28,7 @@ class TgController extends Controller
         ]);
         $log = LogWatch::where('phone', $request->phone);
         $withdraw = Withdraw::where('phone', $phone);
-
+        $this->updateAdsView($request->phone);
         return response()->json([
             'success' => true,
             'user' => TgUser::where('phone', $request->phone)->first(),
@@ -59,16 +59,25 @@ class TgController extends Controller
     public function watchAds(Request $request)
     {
         $phone = $request->phone;
+
+        // check limit 
+        
+        if(LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count() >= env('MAX_ADS_PER_DAY')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Limit per day reached'
+            ]);
+        }
         // insert log
         LogWatch::create([
             'phone' => $phone
         ]);
         $user = TgUser::where('phone', $phone)->first();
-        $user->watched_ads_count = LogWatch::where('phone', $phone)->count();
+        $user->watched_ads_count = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
         $user->earned_points += env('POINTS_PER_AD');
         $user->save();
 
-
+        
         $log = LogWatch::where('phone', $phone);
         $withdraw = Withdraw::where('phone', $phone);
         return response()->json([
@@ -82,6 +91,12 @@ class TgController extends Controller
 
     public function requestWithdraw(Request $request)
     {
+        $request->validate([
+            'phone' => 'required',
+            'amount' => 'required',
+            'method' => 'required',
+            'address' => 'required',
+        ]);
         $phone = $request->phone;
         $amount = $request->amount;
         $method = $request->method;
@@ -114,7 +129,7 @@ class TgController extends Controller
         $user->total_withdraw += $amount;
         $user->save();
 
-        Withdraw::create([
+        $wdRequest = Withdraw::create([
             'phone' => $phone,
             'address' => $request->address,
             'amount' => $amount,
@@ -122,6 +137,13 @@ class TgController extends Controller
             'status' => 'pending',
         ]);
 
+        $telegram = new Api(env('BOT_TOKEN'));
+        $data = [
+            'chat_id' => env('ADMIN_USER_ID'),
+            'text' => "New withdrawal request:\n\nUser: @$user->username\nAmount: ".number_format($wdRequest->amount, 0, '.', ',')." Rupiah\nMethod: $wdRequest->method\nAddress: $wdRequest->address\nDate: ". Carbon::now()->format('d M Y H:i'),
+        ];
+        $response = $telegram->sendMessage($data);
+        
         $log = LogWatch::where('phone', $phone);
         $withdraw = Withdraw::where('phone', $phone);
 
@@ -139,6 +161,7 @@ class TgController extends Controller
     public function limitCheck(Request $request)
     {
         $phone = $request->phone;
+        $this->updateAdsView($phone);
         $user = TgUser::where('phone', $phone)->first();
         if (!$user) {
             return response()->json([
@@ -154,5 +177,13 @@ class TgController extends Controller
             'user' => $user,
             'history' => $history
         ]);
+    }
+
+    public function updateAdsView($phone)
+    {
+        $user = TgUser::where('phone', $phone)->first();
+        $watcedToday = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
+        $user->watched_ads_count = $watcedToday;
+        $user->save();
     }
 }

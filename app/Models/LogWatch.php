@@ -11,6 +11,6 @@ class LogWatch extends Model
     protected $fillable = ['phone'];
 
     function user() {
-        return $this->belongsTo(TgUser::class);
+        return $this->belongsTo(TgUser::class, 'phone', 'phone');
     }
 }

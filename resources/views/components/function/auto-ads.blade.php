@@ -21,7 +21,7 @@
             }
             if (!isAdPlaying) {
                 isAdPlaying = true; // Tandai bahwa iklan sedang berjalan
-                show_9012660()
+                show_{{ env("ADS_ID") }}()
                     .then(() => {
                         fetch("{{ url('/ads/watch') }}", {
                             method: 'POST',
@@ -68,6 +68,7 @@
     }
 
     function stopAutoAds() {
+        isAdPlaying = false;
         clearTimeout(autoAdsInterval);
         document.getElementById('auto-ad-btn').style.display = 'inline-block';
         document.getElementById('stop-auto-btn').style.display = 'none';

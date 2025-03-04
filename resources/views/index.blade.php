@@ -44,26 +44,27 @@
             <div class="buttons">
                 <button id="developer" onclick="window.location.href='https://t.me/cuanads'">Bukti Pembayaran</button>
             </div>
-    
+
             <div class="user-info">
                 <img id="user-photo" src="" alt="User Photo">
                 <p id="user-name"></p>
             </div>
-    
+
             <div class="stats">
                 <p>Iklan yang Ditonton: <span id="watched-ads">0</span></p>
                 <p>Cuan yang Kamu Peroleh: <b>Rp <span id="earned-points">0</span></b></p>
-    
+
                 <p>Minimal Penarikan: <b>Rp 3.000,-</b></p>
                 <p>Total Penarikan Kamu: Rp <span id="total-withdrawn">0</span></p>
             </div>
             <div class="buttons">
                 <x-btn-developer></x-btn-developer>
                 <button id="watch-ad-btn" onclick="watchAd()">Mulai Tonton Iklan 🔥</button>
-                <button id="auto-ad-btn" onclick="startAutoAds()">Tonton Iklan Otomatis</button>
-                <button id="stop-auto-btn" onclick="stopAutoAds()">Stop Iklan Otomatis</button>
+                {{-- <button id="auto-ad-btn" onclick="startAutoAds()">Tonton Iklan Otomatis</button>
+                <button id="stop-auto-btn" onclick="stopAutoAds()">Stop Iklan Otomatis</button> --}}
                 <button id="withdraw-btn" onclick="showWithdrawForm()">Tarik Dana</button>
-                <button id="history-btn" onclick="showWithdrawHistory()">Riwayat Penarikan</button> <!-- Tombol Riwayat -->
+                <button id="history-btn" onclick="showWithdrawHistory()">Riwayat Penarikan</button>
+                <!-- Tombol Riwayat -->
                 <x-ewallet />
             </div>
             <!-- Withdraw Section -->
@@ -71,13 +72,14 @@
                 <h4 style="color: orange; margin-bottom: 15px;">Permintaan Penarikan</h4>
                 <h5 style="color: orange; margin-bottom: 15px;">(Minimal Penarikan Rp.
                     {{ number_format(env('MIN_WITHDRAW_POINTS'), 0, ',', '.') }}) berlaku kelipatan Rp. 1.000</h5>
-    
+
                 <!-- Form Container -->
-    
+
                 <div class="form-container">
                     <!-- Input untuk jumlah poin -->
-                    <input type="number" min="{{ env('MIN_WITHDRAW_POINTS') }}" value="{{ env('MIN_WITHDRAW_POINTS') }}"
-                        id="withdraw-amount" placeholder="Masukkan nilai rupiahnya" />
+                    <input type="number" min="{{ env('MIN_WITHDRAW_POINTS') }}"
+                         id="withdraw-amount"
+                        placeholder="Masukkan nilai rupiahnya" required />
                     <!-- Pilihan metode pembayaran -->
                     <select id="payment-method">
                         <option value="Dana">Saldo Dana</option>
@@ -87,7 +89,7 @@
                 </div>
                 <!-- Input untuk nomor telepon di tengah -->
                 <div class="form-container-phone">
-                    <input type="number" id="withdraw-phone" placeholder="Masukkan Nomor Telepon" />
+                    <input type="number" id="withdraw-phone" placeholder="Masukkan Nomor Telepon" required/>
                 </div>
                 <!-- Tombol untuk withdraw dan kembali -->
                 <div class="button-container">
