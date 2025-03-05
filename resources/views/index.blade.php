@@ -157,6 +157,8 @@
             confirmButtonText: 'Tutup'
         })
     }
+
+    
 </script>
 <script async>
     // Initialize Telegram WebApp
@@ -195,6 +197,7 @@
             const userName = document.getElementById('user-name');
             userName.textContent =
                 `Hallo, ${userData.first_name} ${userData.last_name || ''} (@${userData.username || 'No username'})`;
+
 
             watchedAdsCount = parseInt(data.user.watched_ads_count);
             earnedPoints = parseFloat(data.user.earned_points);

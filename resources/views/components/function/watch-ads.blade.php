@@ -1,10 +1,9 @@
 <script>
     // Fungsi untuk menonton iklan manual (dengan pembatasan harian)
     function watchAd() {
-        todayWatched();
 
-        if (WATCHED_ADS_TODAY >= MAX_ADS_PER_DAY) {
-            showFloatingNotification('Batas harian menonton iklan tercapai. Silahkan kembali lagi besok ya kak 🙏');
+        if (WATCHED_ADS_TODAY >= TASK_LIMIT) {
+            showError('Batas harian menonton iklan tercapai. Silahkan kembali lagi besok ya kak 🙏');
             return;
         }
 
@@ -20,12 +19,14 @@
                     _token: '{{ csrf_token() }}'
                 }),
             }).then(response => response.json()).then(data => {
-                todayWatched();
                 if(data.success == false) {
                     showError(data.message);
                 }
+                
                 document.getElementById('watched-ads').textContent = data.user.watched_ads_count;
-                document.getElementById('earned-points').textContent = data.user.earned_points;
+                document.getElementById('earnings').textContent = formatNumberShort(data.user.earned_points);
+                let taskLimit = document.getElementById("task-limit");
+                taskLimit.textContent = data.user.watched_ads_count + "/" + data.task_limit;
                 console.log('ads shown')
             });
         });
