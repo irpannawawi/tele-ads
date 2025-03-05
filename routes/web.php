@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/v2', function () {
+    return view('indexv2');
+});
+
 Route::post('/get_user',[TgController::class,'getUser'])->name('user.get');
 Route::get('/get_user/{phone}',[TgController::class,'getUserByPhone'])->name('user.getByPhone');
 Route::post('/ads/watch',[TgController::class,'watchAds'])->name('user.watchAds');
