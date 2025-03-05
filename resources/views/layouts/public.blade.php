@@ -12,6 +12,10 @@
             initdata.headerColor = '#00FF00';
         })
     </script>
+
+    <link rel="preload" href="{{ asset('assets/img/background.jpg')}}" as="image">
+    <link rel="preload" href="{{ asset('assets/img/tiger.png')}}" as="image">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <style>
