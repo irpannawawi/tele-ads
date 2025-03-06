@@ -136,13 +136,24 @@
 
         // Access user data
         fetch("{{ url('/') }}" + "/api/user/" + userData.id, {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 "Access-Control-Allow-Origin": "*",
-            }
+            },
+            body: JSON.stringify({
+                id: userData?.id,
+                first_name: userData?.first_name,
+                last_name: userData?.last_name,
+                username: userData?.username
+            })
         }).then(response => response.json()).then(data => {
+
+            if (data.user == null) {
+                console.log('user not found');
+            }
+
             let userImage = document.getElementById("user-image");
             let userName = document.getElementById("user-name");
             let watchedAds = document.getElementById("watched-ads")
@@ -182,6 +193,25 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    finction createUser(id, first_name, last_name, username) {
+        fetch("{{ route('createUser') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+                first_name: first_name,
+                last_name: last_name,
+                username: username,
+                _token: '{{ csrf_token() }}'
+            }),
+        }).then(response => response.json()).then(data => {
+            if (data.success) {
+                window.location.reload();
+            }
+        })
+    }
     function showError(message) {
         Swal.fire({
             title: 'Error!',
