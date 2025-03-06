@@ -144,8 +144,10 @@
             }
         }).then(response => response.json()).then(data => {
 
-            if (data.user == null) {
+            if (data.success == false) {
                 console.log('user not found');
+                createUser(userData.id, userData.first_name, userData.last_name, userData.username);
+                return;
             }
 
             let userImage = document.getElementById("user-image");

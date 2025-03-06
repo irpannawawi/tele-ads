@@ -16,6 +16,12 @@ class ApiTgController extends Controller
         // update watched ads
         $this->updateAdsView($phone);
         $user = TgUser::where('phone', $phone)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ]);
+        }
         return response()->json([
             'success' => true,
             'user' => $user,
