@@ -136,7 +136,7 @@
 
         // Access user data
         fetch("{{ url('/') }}" + "/api/user/" + userData.id, {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
