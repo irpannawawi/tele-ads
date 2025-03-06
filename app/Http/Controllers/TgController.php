@@ -82,6 +82,43 @@ class TgController extends Controller
 
         return redirect()->route('history')->with('success', 'Withdrawal request sent successfully');
     }
+
+    public function watchAds(Request $request)
+    {
+        $phone = $request->phone;
+
+        // check limit 
+        try {
+            DB::beginTransaction();
+
+
+            if (LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count() >= env('MAX_ADS_PER_DAY')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Limit per day reached'
+                ]);
+            }
+            // insert log
+            LogWatch::create([
+                'phone' => $phone
+            ]);
+            $user = TgUser::where('phone', $phone)->first();
+            $user->watched_ads_count = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
+            $user->earned_points += env('POINTS_PER_AD');
+            $user->save();
+
+
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'task_limit' => env('MAX_ADS_PER_DAY'),
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
+    }
+
     // ./v2
     public function getUser(Request $request)
     {
@@ -128,43 +165,6 @@ class TgController extends Controller
     }
 
 
-    public function watchAds(Request $request)
-    {
-        $phone = $request->phone;
-
-        // check limit 
-        try {
-            DB::beginTransaction();
-
-
-            if (LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count() >= env('MAX_ADS_PER_DAY')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Limit per day reached'
-                ]);
-            }
-            // insert log
-            LogWatch::create([
-                'phone' => $phone
-            ]);
-            $user = TgUser::where('phone', $phone)->first();
-            $user->watched_ads_count = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
-            $user->earned_points += env('POINTS_PER_AD');
-            $user->save();
-
-
-            $log = LogWatch::where('phone', $phone);
-            $withdraw = Withdraw::where('phone', $phone);
-            DB::commit();
-            return response()->json([
-                'success' => true,
-                'user' => $user,
-                'task_limit' => env('MAX_ADS_PER_DAY'),
-            ]);
-        } catch (\Throwable $th) {
-            DB::rollBack();
-        }
-    }
 
 
 

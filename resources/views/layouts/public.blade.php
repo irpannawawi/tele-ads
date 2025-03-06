@@ -157,7 +157,6 @@
             } else {
                 userName.textContent = data.user.username;
             }
-            if (window.location.href === "{{ route('home') }}") {
                 // Redirect to /home if route is /
                 watchedAds.textContent = data.user.watched_ads_count;
                 currentPoints.textContent = formatNumberShort(data.user.earned_points);
@@ -165,15 +164,8 @@
 
                 let taskLimit = document.getElementById("task-limit");
                 taskLimit.textContent = data.user.watched_ads_count + "/" + data.task_limit;
-            }
 
-            if (window.location.href === "{{ route('withdrawals') }}") {
-                let userId = document.getElementById("id");
-                userId.value = userData.id;
-                if (userId.value != '') {
-                    document.getElementById('btnSubmit').classList.remove('disabled');
-                }
-            }
+
 
 
             // ads click

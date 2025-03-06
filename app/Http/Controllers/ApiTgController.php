@@ -7,11 +7,14 @@ use App\Models\TgUser;
 use App\Models\Withdraw;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ApiTgController extends Controller
 {
     public function getUser(Request $request, $id){
         $phone = $id;
+        // update watched ads
+        $this->updateAdsView($phone);
         $user = TgUser::where('phone', $phone)->first();
         return response()->json([
             'success' => true,
@@ -52,5 +55,13 @@ class ApiTgController extends Controller
         $phone = $request->id;
         $withdraw = Withdraw::where('phone', $phone)->orderBy('created_at', 'desc')->get();
         return $withdraw;
+    }
+
+    public function updateAdsView($phone)
+    { 
+        $user = TgUser::where('phone', $phone)->first();
+        $watcedToday = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
+        $user->watched_ads_count = $watcedToday;
+        $user->save();
     }
 }

@@ -8,11 +8,7 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/v2', [TgController::class,'index'])->name('home');
+Route::get('/', [TgController::class,'index'])->name('home');
 Route::get('/withdrawals', [TgController::class,'withdrawals'])->name('withdrawals');
 Route::get('/history', [TgController::class,'history'])->name('history');
 Route::post('/withdraw/request', [TgController::class,'requestWithdraw'])->name('user.requestWithdraw');
@@ -35,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/users', [DashboardController::class,'users'])->name('dashboard.users');
     Route::get('/dashboard/users/reset/{id}', [DashboardController::class,'resetUser'])->name('users.reset');
     Route::post('/dashboard/users/bonus', [DashboardController::class,'giveBonus'])->name('users.bonus');
+    Route::get('/recalculate', [DashboardController::class,'recalculate'])->name('recalculate');
     
     // withdraw
     Route::get('/dashboard/withdrawals', [WithdrawController::class,'index'])->name('dashboard.withdrawals');

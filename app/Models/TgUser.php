@@ -20,5 +20,9 @@ class TgUser extends Model
         'status',
     ];
 
+    public function log(){
+        return $this->hasMany(LogWatch::class, 'phone', 'phone');
+    }
+
 
 }

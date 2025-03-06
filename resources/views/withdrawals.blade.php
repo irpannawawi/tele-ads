@@ -18,9 +18,9 @@
                     @endif
                     <div class="form-group mb-2">
                         <label for="nominal">Nominal Penarikan</label>
-                        <input type="number" class="form-control" id="nominal" placeholder="Masukkan nominal" name="amount" value="{{old('nominal')}}"
-                            required>
-                            <input type="hidden" name="id" id="id" value="">
+                        <input type="number" min="{{ env('MIN_WITHDRAW_POINTS') }}" class="form-control" id="nominal"
+                            placeholder="Masukkan nominal" name="amount" value="{{ old('nominal') }}" required>
+                        <input type="hidden" name="id" id="id" value="">
                     </div>
                     <div class="form-group mb-2">
                         <label for="metode">Metode Penarikan</label>
@@ -32,11 +32,33 @@
                     <div class="form-group mb-2">
                         <label for="tujuan">Nomor Tujuan</label>
                         <input type="number" class="form-control" id="tujuan" placeholder="Masukkan nomor tujuan"
-                            name="address" value="{{old('tujuan')}}" required>
+                            name="address" value="{{ old('tujuan') }}" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mt-2 disabled" id="btnSubmit">Tarik</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Access user data
+            fetch("{{ url('/') }}" + "/api/user/" + userData.id, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                }
+            }).then(response => response.json()).then(data => {
+                let userId = document.getElementById("id");
+                userId.value = userData.id;
+                if (userId.value != '') {
+                    document.getElementById('btnSubmit').classList.remove('disabled');
+                }
+
+            });
+        })
+    </script>
 @endsection

@@ -8,7 +8,12 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header"><i class="fab fa-telegram"></i> Telegram Users</div>
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="card-title">
+                            <i class="fab fa-telegram"></i> Telegram Users 
+                            </div>
+                            <a href="{{ route('recalculate')}}" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure?')">Refresh</a>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-sm table-hover table-bordered datatable-desc">
@@ -17,6 +22,7 @@
                                         <th class="bg-dark text-center text-white">#</th>
                                         <th class="bg-dark text-center text-white">ID</th>
                                         <th class="bg-dark text-center text-white">User</th>
+                                        <th class="bg-dark text-center text-white">All time Ads</th>
                                         <th class="bg-dark text-center text-white">Today Ad's Watched</th>
                                         <th class="bg-dark text-center text-white">Current Point</th>
                                         <th class="bg-dark text-center text-white">Withdrawn</th>
@@ -30,6 +36,7 @@
                                             <th scope="row">{{ $user->phone }}</th>
                                             <td>{{ $user->first_name . ' ' . $user->last_name }}
                                                 ({{ $user->username == null ? '' : '@' . $user->username }})</td>
+                                            <td>{{ $user->log->count() }}</td>
                                             <td>{{ $user->watched_ads_count }}</td>
                                             <td class="text-end">Rp. {{ number_format($user->earned_points, 0, ',', '.') }},-
                                             </td>

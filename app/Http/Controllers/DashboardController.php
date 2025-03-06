@@ -38,6 +38,16 @@ class DashboardController extends Controller
         $user->save();
         return redirect()->back()->with('success', 'Points added successfully');
     }
+
+    public function recalculate(Request $request)
+    {
+        $user = TgUser::all();
+        foreach ($user as $u) {
+            $u->watched_ads_count = LogWatch::where('phone', $u->phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
+            $u->save();
+        }
+        return redirect()->back()->with('success', 'Recalculated successfully');
+    }
     public function resetUser($id)
     {
         $user = TgUser::find($id);
