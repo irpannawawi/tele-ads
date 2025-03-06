@@ -141,13 +141,7 @@
                 "Content-Type": "application/json",
                 "Accept": "application/json",
                 "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-                id: userData?.id,
-                first_name: userData?.first_name,
-                last_name: userData?.last_name,
-                username: userData?.username
-            })
+            }
         }).then(response => response.json()).then(data => {
 
             if (data.user == null) {
