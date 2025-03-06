@@ -193,7 +193,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    finction createUser(id, first_name, last_name, username) {
+    function createUser(id, first_name, last_name, username) {
         fetch("{{ route('createUser') }}", {
             method: 'POST',
             headers: {
