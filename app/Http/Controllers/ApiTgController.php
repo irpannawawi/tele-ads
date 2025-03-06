@@ -66,6 +66,12 @@ class ApiTgController extends Controller
     public function updateAdsView($phone)
     { 
         $user = TgUser::where('phone', $phone)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ]);
+        }
         $watcedToday = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
         $user->watched_ads_count = $watcedToday;
         $user->save();
