@@ -24,10 +24,10 @@
                     </a>
                 </li>
                 <li class="nav-item p-0">
-                    <a href="#" class="nav-link text-center menu-label">
+                    <button role="button" class="nav-link text-center menu-label" data-bs-toggle="modal" data-bs-target="#tutorialModal">
                     <img class="menu-icon img-fluid" src="{{ asset('assets/icon/stack-of-books.png') }}" alt="">
-                        <br>Tutorial
-                    </a>
+                        <br>Panduan
+                    </button>
                 </li>
             </ul>
         </nav>

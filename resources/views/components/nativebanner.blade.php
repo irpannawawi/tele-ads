@@ -1,0 +1,1 @@
+<script src='//whephiwums.com/sdk.js' data-zone='{{ env("ADS_ID")}}' data-sdk='show_{{ env("ADS_ID")}}'></script>

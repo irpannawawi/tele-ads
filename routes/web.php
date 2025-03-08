@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/users', [DashboardController::class,'users'])->name('dashboard.users');
     Route::get('/dashboard/users/reset/{id}', [DashboardController::class,'resetUser'])->name('users.reset');
     Route::post('/dashboard/users/bonus', [DashboardController::class,'giveBonus'])->name('users.bonus');
+    Route::delete('/dashboard/users/destroy/{id}', [DashboardController::class,'destroy_user'])->name('users.destroy');
     Route::get('/recalculate', [DashboardController::class,'recalculate'])->name('recalculate');
     
     // withdraw

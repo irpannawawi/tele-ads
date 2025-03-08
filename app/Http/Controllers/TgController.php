@@ -73,7 +73,7 @@ class TgController extends Controller
         $telegram = new Api(env('BOT_TOKEN'));
         $data = [
             'chat_id' => env('ADMIN_USER_ID'),
-            'text' => "New withdrawal request:\n\nUser: @$user->username\nAmount: " . number_format($wdRequest->amount, 0, '.', ',') . " Rupiah\nMethod: $wdRequest->method\nAddress: $wdRequest->address\nDate: " . Carbon::now()->format('d M Y H:i'),
+            'text' => "New withdrawal request:\n\nUser: $phone (@$user->username)\nAmount: " . number_format($wdRequest->amount, 0, '.', ',') . " Rupiah\nMethod: $wdRequest->method\nAddress: $wdRequest->address\nDate: " . Carbon::now()->format('d M Y H:i'),
         ];
         $response = $telegram->sendMessage($data);
 

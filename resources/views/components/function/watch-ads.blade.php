@@ -6,7 +6,7 @@
             showError('Batas harian menonton iklan tercapai. Silahkan kembali lagi besok ya kak 🙏');
             return;
         }
-
+        window.navigator.vibrate(90);
         show_{{ env('ADS_ID') }}().then((res) => {
             console.log(res)
             fetch("{{ url('/ads/watch') }}", {
@@ -25,9 +25,11 @@
                 
                 document.getElementById('watched-ads').textContent = data.user.watched_ads_count;
                 document.getElementById('earnings').textContent = formatNumberShort(data.user.earned_points);
-                let taskLimit = document.getElementById("task-limit");
-                taskLimit.textContent = data.user.watched_ads_count + "/" + data.task_limit;
-                console.log('ads shown')
+                document.getElementById("total-income").textContent = formatNumberShort(data.user.total_withdraw+data.user.earned_points);
+
+                let taskLimitBar = document.getElementById("task-progress-bar");
+                taskLimitBar.style.width = (data.user.watched_ads_count / data.task_limit) * 100 + "%";
+                taskLimitBar.textContent = data.user.watched_ads_count + "/" + data.task_limit + " Task";
             });
         });
     }

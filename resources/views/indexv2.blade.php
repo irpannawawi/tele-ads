@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    <div class="row mt-2 mb-4">
+    <div class="row mt-4 mb-1">
         <div class="d-flex justify-content-between px-1 card-row">
             <div class="p-1  w-100 card-bg-main ">
                 <div class="card p-1 bg-transparent border-0 text-white">
@@ -15,7 +15,7 @@
             <div class="p-1 w-100 card-bg-main">
 
                 <div class="card p-1 bg-transparent border-0 text-white">
-                    <p class="text-center mb-0">Cuan Diperoleh</p>
+                    <p class="text-center mb-0">Cuan Tersedia</p>
                     <div class="d-flex justify-content-center align-items-center">
                         <img src="{{ asset('assets/icon/salary.png') }}" alt="Sallary icon" class="img-fluid card-icon">
                         <span class="fw-bold text-center" id="earnings"></span>
@@ -35,27 +35,79 @@
             </div>
         </div>
     </div>
-
+    <div class="row mt-2">
+        <div class="d-flex justify-content-center align-items-center px-1">
+            <div class="p-1  w-100  ">
+                <div class="card p-1 bg-transparent  border-0 text-white py-1">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('assets/icon/money-bag.png') }}" alt="Sallary icon" class="img-fluid card-icon">
+                        <span class="mx-2 fw-bold fs-2" id="total-income"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- progressbar --}}
+    <div class="row mt-1">
+        <div class="col">
+            <div class="progress" role="progressbar" aria-label="Task progress" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">
+                <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible" style="width: 0%"
+                    id="task-progress-bar"></div>
+            </div>
+        </div>
+    </div>
     {{-- button --}}
-    <div class="row mt-5 pt-4">
+    <div class="row mt-1 pt-1">
         <div class="col text-center">
+            <button id="btnCountdown" class="rounded-circle border-0 bg-dark-op75 text-white fw-bold d-none">
+                Anda dapat menonton iklan dalam
+                <span class="fw-bold" id="countdown"></span> detik
+            </button>
             <button id="btnWatch" class="rounded-circle border-0 bg-transparent">
-                <img src="{{ asset('assets/img/tiger.png') }}" alt="Watch" class="img-fluid shadow-bottom">
+                <img src="{{ asset('assets/img/icon_klik.png') }}" alt="Watch" class="img-fluid shadow-bottom">
             </button>
         </div>
     </div>
-    <div class="d-flex justify-content-between mt-3">
+
+    <div class="d-flex justify-content-center mt-2">
         <div class="p-1">
-            <span class="fw-bold text-white badge bg-dark-op75 border border-dark  rounded-pill px-3"><img
-                    src="{{ asset('assets/icon/task.png') }}" alt="" height="20"><span
-                    id="task-limit"></span></span>
-        </div>
-        <div class="p-1">
-            <a href="#">
-                <span class="fw-bold text-white badge bg-dark-op75 border border-dark text-white rounded-pill px-3">
-                    <img src="{{ asset('assets/icon/telegram.png') }}" alt="" height="20"> Saran
+            <a href="https://t.me/cuanads">
+
+                <span class="fw-bold text-white badge bg-primary  rounded-pill p-4 py-3 fs-4">
+                    Bukti Pembayaran
                 </span>
             </a>
         </div>
     </div>
+
+    <script>
+        let btnWatch = document.getElementById('btnWatch')
+        let countdown = document.getElementById('countdown')
+        let btnCountdown = document.getElementById('btnCountdown')
+        function showTimeout(time) {
+            btnWatch.classList.add('d-none');
+            btnCountdown.classList.remove('d-none');
+
+            // update interval
+            let interval = setInterval(() => {
+                time -= 1;
+                countdown.innerHTML = time;
+                if (time == 0) {
+                    clearInterval(interval);
+                    btnWatch.classList.remove('d-none');
+                    btnCountdown.classList.add('d-none');
+                }
+            }, 1000);
+        }
+
+        function disableBtn() {
+            btnWatch.disabled = true;
+            showTimeout(20); // jumlah second
+            btnWatch.disabled = false;
+        }
+
+
+        btnWatch.addEventListener('click', disableBtn)
+    </script>
 @endsection

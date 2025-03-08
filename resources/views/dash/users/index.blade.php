@@ -10,9 +10,10 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="card-title">
-                            <i class="fab fa-telegram"></i> Telegram Users 
-                            </div>
-                            <a href="{{ route('recalculate')}}" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure?')">Refresh</a>
+                            <i class="fab fa-telegram"></i> Telegram Users
+                        </div>
+                        <a href="{{ route('recalculate') }}" class="btn btn-sm btn-primary"
+                            onclick="return confirm('Are you sure?')">Refresh</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -35,22 +36,33 @@
                                             <th scope="row">{{ $user->id }}</th>
                                             <th scope="row">{{ $user->phone }}</th>
                                             <td>{{ $user->first_name . ' ' . $user->last_name }}
-                                                ({{ $user->username == null ? '' : '@' . $user->username }})</td>
+                                                ({{ $user->username == null ? '' : '@' . $user->username }})
+                                            </td>
                                             <td>{{ $user->log->count() }}</td>
                                             <td>{{ $user->watched_ads_count }}</td>
-                                            <td class="text-end">Rp. {{ number_format($user->earned_points, 0, ',', '.') }},-
+                                            <td class="text-end">Rp.
+                                                {{ number_format($user->earned_points, 0, ',', '.') }},-
                                             </td>
-                                            <td class="text-end">Rp.{{ number_format($user->total_withdraw, 0, ',', '.') }},-
+                                            <td class="text-end">
+                                                Rp.{{ number_format($user->total_withdraw, 0, ',', '.') }},-
                                             </td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <button class="btn btn-sm btn-success"
-                                                        onclick="changegiftId({{ $user->id }})" data-toggle="modal"
-                                                        data-target="#giftModal"><i class="fa fa-gift"></i></button>
-                                                    <a class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Are you sure?')"
-                                                        href="{{ route('users.reset', $user->id) }}">Reset</a>
-                                                </div>
+                                                <form action="{{ route('users.destroy', ['id' => $user->phone]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-sm btn-success"
+                                                            onclick="changegiftId({{ $user->id }})" data-toggle="modal"
+                                                            data-target="#giftModal"><i class="fa fa-gift"></i></button>
+                                                        <a class="btn btn-sm btn-warning"
+                                                            onclick="return confirm('Are you sure?')"
+                                                            href="{{ route('users.reset', $user->id) }}">Reset</a>
+                                                        <button class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Are you sure?')"><i
+                                                                class="fa fa-trash"></i></button>
+                                                    </div>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

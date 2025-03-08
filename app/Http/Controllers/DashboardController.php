@@ -7,6 +7,7 @@ use App\Models\TgUser;
 use App\Models\Withdraw;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 use Telegram\Bot\Api;
@@ -17,8 +18,9 @@ class DashboardController extends Controller
         
         $data = [
             'total_users' => TgUser::count(),
-            'pending_withdrawal' => Withdraw::where('status', 'pending')->sum('amount'),
             'today_active_users' => LogWatch::whereDate('created_at', Carbon::today()->startOfDay())->distinct('phone')->count(),
+            'pending_withdrawal' => Withdraw::where('status', 'pending')->sum('amount'),
+            'all_credit' => TgUser::where('earned_points', '>=', env('MIN_WITHDRAW_POINTS'))->sum('earned_points'),
         ];
         return view('dashboard', $data);
     }
@@ -107,5 +109,23 @@ class DashboardController extends Controller
         }
         File::put($envFile, implode("\n", $lines));
         return redirect()->back()->with('success', 'Settings updated successfully');
+    }
+
+    public function destroy_user($id)
+    {
+        try{
+            // remove log
+        DB::beginTransaction();
+        LogWatch::where('phone', $id)->delete();
+        // remove withdraw
+        Withdraw::where('phone', $id)->delete();
+        // remove user
+        TgUser::where('phone', $id)->delete();
+        DB::commit();
+        }catch(\Exception $e){
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
+        return redirect()->back()->with('error', 'User deleted successfully');
     }
 }

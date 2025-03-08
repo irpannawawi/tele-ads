@@ -10,13 +10,13 @@
     <meta name="author" content="">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    
     <!-- Custom fonts for this template-->
     <link href="{{ asset('sb-admin') }}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <link rel="icon" type="image/svg+xml" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRyzK1kvRVmaShmJ9hUlp7JWfFsUDcUrX2pb3vL37fqVzuXDcgWqALoOgtnsMZ5Xk759z4YscjP5XrhNEs_pTcouE-RfvKd5ZJaHlrCLyDJWp7x5TBVXH93TUYhZpJj0ZmuctMIkCRkvNAFq_nUI8BbNwW0CVAS1AQOu0hnCEfZzvhYLCWm2Goc-TjIf0r/s1600/favicon-CpiEVG3S.png" />
     <!-- Custom styles for this template-->
     <link href="{{ asset('sb-admin') }}/css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
