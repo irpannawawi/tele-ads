@@ -17,7 +17,7 @@ Route::post('/withdraw/request', [TgController::class,'requestWithdraw'])->name(
 Route::post('/get_user',[TgController::class,'getUser'])->name('user.get');
 Route::get('/get_user/{phone}',[TgController::class,'getUserByPhone'])->name('user.getByPhone');
 Route::post('/ads/watch',[TgController::class,'watchAds'])->name('user.watchAds');
-Route::post('/watch',[TgController::class,'watchAdsgram'])->name('user.watchAdsgram');
+Route::post('/watch/adsgram/{id}',[TgController::class,'watchAdsgram'])->name('user.watchAdsgram');
 Route::post('/limit_check', [TgController::class,'limitCheck'])->name('user.limitCheck');
 Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 

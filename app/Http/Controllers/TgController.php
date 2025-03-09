@@ -119,9 +119,9 @@ class TgController extends Controller
         }
     }
 
-    public function watchAdsgram(Request $request)
+    public function watchAdsgram($id)
     {
-        $phone = $_GET['userid'];
+        $phone = $id;
 
         // check limit 
         try {
