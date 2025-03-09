@@ -6,20 +6,23 @@
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                       <div class="carousel-item active">
-                        <img src="{{asset('assets/img/tutorial/step1.jpg')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
+                        <img src="{{asset('assets/img/tutorial/step1a.gif')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
                       </div>
                       <div class="carousel-item">
-                        <img src="{{asset('assets/img/tutorial/step2.jpg')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
+                        <img src="{{asset('assets/img/tutorial/step2b.gif')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
                       </div>
                       <div class="carousel-item">
-                        <img src="{{asset('assets/img/tutorial/step3.jpg')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
+                        <img src="{{asset('assets/img/tutorial/step3c.gif')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
                       </div>
                       <div class="carousel-item">
-                        <img src="{{asset('assets/img/tutorial/step4.jpg')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
+                        <img src="{{asset('assets/img/tutorial/step4d.gif')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
                       </div>
-                      <!--<div class="carousel-item">
-                        <img src="{{asset('assets/img/tutorial/step5.png')}}" class="d-block img-fluid" height="50" alt="..." loading="lazy">
-                      </div>-->
+                      <div class="carousel-item">
+                        <img src="{{asset('assets/img/tutorial/step5e.gif')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{asset('assets/img/tutorial/step6f.gif')}}" class="d-block img-fluid" height="75" alt="..." loading="lazy">
+                      </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>

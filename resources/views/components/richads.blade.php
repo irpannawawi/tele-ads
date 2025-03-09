@@ -4,6 +4,6 @@
   window.TelegramAdsController = new TelegramAdsController();
   window.TelegramAdsController.initialize({
     pubId: "963604",
-    appId: "1695",
+    appId: "1708",
   });
 </script>

@@ -61,8 +61,11 @@
     <div class="row mt-1 pt-1">
         <div class="col text-center">
             <button id="btnCountdown" class="rounded-circle border-0 bg-dark-op75 text-white fw-bold d-none">
-                Anda dapat menonton iklan dalam
-                <span class="fw-bold" id="countdown"></span> detik
+                <span class="fw-bold  position-absolute top-50  pt-5">
+                    Anda dapat menonton iklan dalam
+                    <span class="fw-bold" id="countdown"></span> detik
+                </span>
+                <img src="{{ asset('assets/img/icon_klik.png') }}" alt="Watch" class="img-fluid shadow-bottom">
             </button>
             <button id="btnWatch" class="rounded-circle border-0 bg-transparent">
                 <img src="{{ asset('assets/img/icon_klik.png') }}" alt="Watch" class="img-fluid shadow-bottom">
@@ -85,6 +88,7 @@
         let btnWatch = document.getElementById('btnWatch')
         let countdown = document.getElementById('countdown')
         let btnCountdown = document.getElementById('btnCountdown')
+
         function showTimeout(time) {
             btnWatch.classList.add('d-none');
             btnCountdown.classList.remove('d-none');

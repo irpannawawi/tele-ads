@@ -21,7 +21,6 @@
         })
     </script>
     
-    @include('components.richads')
     
     <link rel="preload" href="{{ asset('assets/img/background.jpg') }}" as="image">
     <link rel="preload" href="{{ asset('assets/img/icon_klik.png') }}" as="image">
@@ -69,7 +68,8 @@
         }
 
         #bottomNavbar {
-            background: rgba(0, 0, 0, 0.76)
+            background: rgba(0, 0, 0, 0.76);
+            z-index: 1;
         }
 
         #btnWatch, #btnCountdown {
@@ -77,7 +77,12 @@
             height: 300px;
             margin: 0px auto;
         }
-
+        #btnCountdown >img{
+            opacity: 0.4;
+        }
+        #btnCountdown>span{
+            left: 10%;
+        }
         #btnWatch>img:active {
             transform: translateY(6px);
         }
@@ -143,6 +148,7 @@
     </script>
 
     @include('components.function.nativebanner')
+    @include('components.richads')
     @include('components.function.watch-ads')
     <script>
         

@@ -21,6 +21,7 @@
                                 <thead>
                                     <tr>
                                         <th class="bg-dark text-center text-white">#</th>
+                                        <th class="bg-dark text-center text-white">Registered At</th>
                                         <th class="bg-dark text-center text-white">ID</th>
                                         <th class="bg-dark text-center text-white">User</th>
                                         <th class="bg-dark text-center text-white">All time Ads</th>
@@ -34,6 +35,7 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <th scope="row">{{ $user->id }}</th>
+                                            <th scope="row">{{ Illuminate\Support\Carbon::parse($user->created_at)->format('d-m-Y h:i') }}</th>
                                             <th scope="row">{{ $user->phone }}</th>
                                             <td>{{ $user->first_name . ' ' . $user->last_name }}
                                                 ({{ $user->username == null ? '' : '@' . $user->username }})
