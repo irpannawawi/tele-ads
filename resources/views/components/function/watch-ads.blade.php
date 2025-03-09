@@ -3,6 +3,34 @@
     adType = 0;
     console.log(adType)
 
+    function sendWatchAdRequest() {
+        fetch("{{ url('/ads/watch') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone: userData?.id,
+                _token: '{{ csrf_token() }}'
+            }),
+        }).then(response => response.json()).then(data => {
+            if (data.success == false) {
+                showError(data.message);
+            }
+
+            document.getElementById('watched-ads').textContent = data.user.watched_ads_count;
+            document.getElementById('earnings').textContent = formatNumberShort(data.user
+                .earned_points);
+            document.getElementById("total-income").textContent = formatNumberShort(data.user
+                .total_withdraw + data.user.earned_points);
+
+            let taskLimitBar = document.getElementById("task-progress-bar");
+            taskLimitBar.style.width = (data.user.watched_ads_count / data.task_limit) * 100 + "%";
+            taskLimitBar.textContent = data.user.watched_ads_count + "/" + data.task_limit +
+                " Task";
+        });
+    }
+
     function adOne() {
         show_{{ env('ADS_ID') }}().then((res) => {
             console.log(res)
@@ -35,7 +63,11 @@
     }
 
     function adTwo() {
-            window.TelegramAdsController.triggerInterstitialBanner()
+        window.TelegramAdsController.triggerInterstitialBanner()
+    }
+
+    function adThree() {
+        window.open('https://giphootchebs.net/4/8502226', '_blank');
     }
 
     function watchAd() {
@@ -58,31 +90,12 @@
                 break;
             case 1:
                 adTwo();
-                fetch("{{ url('/ads/watch') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        phone: userData?.id,
-                        _token: '{{ csrf_token() }}'
-                    }),
-                }).then(response => response.json()).then(data => {
-                    if (data.success == false) {
-                        showError(data.message);
-                    }
-
-                    document.getElementById('watched-ads').textContent = data.user.watched_ads_count;
-                    document.getElementById('earnings').textContent = formatNumberShort(data.user
-                        .earned_points);
-                    document.getElementById("total-income").textContent = formatNumberShort(data.user
-                        .total_withdraw + data.user.earned_points);
-
-                    let taskLimitBar = document.getElementById("task-progress-bar");
-                    taskLimitBar.style.width = (data.user.watched_ads_count / data.task_limit) * 100 + "%";
-                    taskLimitBar.textContent = data.user.watched_ads_count + "/" + data.task_limit +
-                        " Task";
-                });
+                sendWatchAdRequest();
+                adType = 2
+                break;
+            case 2:
+                adThree();
+                sendWatchAdRequest();
                 adType = 0
                 break;
         }
