@@ -20,6 +20,7 @@
             initdata.headerColor = '#00FF00';
         })
     </script>
+    @include('components.richads')
     
     
     <link rel="preload" href="{{ asset('assets/img/background.jpg') }}" as="image">
@@ -148,7 +149,6 @@
     </script>
 
     @include('components.function.nativebanner')
-    @include('components.richads')
     @include('components.function.watch-ads')
     <script>
         
