@@ -31,7 +31,7 @@
         });
     }
 
-    function adOne() {
+    function adMonetag() {
         show_{{ env('ADS_ID') }}().then((res) => {
             console.log(res)
             fetch("{{ url('/ads/watch') }}", {
@@ -62,11 +62,11 @@
         });
     }
 
-    function adTwo() {
-        window.TelegramAdsController.triggerInterstitialBanner()
+    function adRichads() {
+        return window.TelegramAdsController.triggerInterstitialBanner();
     }
 
-    function adThree() {
+    function adDirectLink() {
         window.open('https://giphootchebs.net/4/8502226', '_blank');
     }
 
@@ -85,16 +85,16 @@
         }
         switch (adType) {
             case 0:
-                adOne();
+                adMonetag();
                 adType = 1
                 break;
             case 1:
-                adTwo();
+                adRichads();
                 sendWatchAdRequest();
                 adType = 2
                 break;
             case 2:
-                adThree();
+                adDirectLink();
                 sendWatchAdRequest();
                 adType = 0
                 break;
