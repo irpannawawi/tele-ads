@@ -20,7 +20,7 @@
             initdata.headerColor = '#00FF00';
         })
     </script>
-    @include('components.richads')
+    {{-- @include('components.richads') --}}
     
     
     <link rel="preload" href="{{ asset('assets/img/background.jpg') }}" as="image">

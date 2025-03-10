@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\InviteJob;
 use App\Models\LogWatch;
 use App\Models\TgUser;
 use App\Models\Withdraw;
@@ -127,5 +128,16 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
         return redirect()->back()->with('error', 'User deleted successfully');
+    }
+
+    public function inviteInactiveUser(){
+        $activeUser = LogWatch::where('created_at', '>=', Carbon::now()->startOfDay())->distinct('phone')->pluck('phone')->toArray();
+
+        $inactiveUser = TgUser::whereNotIn('phone', $activeUser)->pluck('phone')->toArray();
+
+        foreach ($inactiveUser as $u) {
+            InviteJob::dispatch($u);
+        }
+
     }
 }

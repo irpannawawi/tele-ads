@@ -20,6 +20,7 @@ Route::post('/ads/watch',[TgController::class,'watchAds'])->name('user.watchAds'
 Route::post('/watch/adsgram/{id}',[TgController::class,'watchAdsgram'])->name('user.watchAdsgram');
 Route::post('/limit_check', [TgController::class,'limitCheck'])->name('user.limitCheck');
 Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/inviteinactivuserowiurkjkasdjahliwuehaksdjaheiuur', [DashboardController::class,'inviteInactiveUser']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

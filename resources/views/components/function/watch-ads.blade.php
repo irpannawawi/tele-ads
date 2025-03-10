@@ -62,16 +62,20 @@
         });
     }
 
-    function adRichads() {
-        return window.TelegramAdsController.triggerInterstitialBanner();
-    }
+    // function adRichads() {
+    //     return window.TelegramAdsController.triggerInterstitialBanner();
+    // }
 
     function adDirectLink() {
-        window.open('https://giphootchebs.net/4/8502226', '_blank');
+        window.open('https://destisheem.com/4/9062646', '_blank');
     }
 
+    function adDirectLink2() {
+        window.open('https://suggestbingo.com/hfwfwc2gfz?key=29731af3edcb8907d1c27d4986b092cd', '_blank');
+    }
+
+
     function watchAd() {
-        // window.open("https://giphootchebs.net/4/8502226", '_blank');
         if (WATCHED_ADS_TODAY >= TASK_LIMIT) {
             showError('Batas harian menonton iklan tercapai. Silahkan kembali lagi besok ya kak 🙏');
             return;
@@ -89,12 +93,12 @@
                 adType = 1
                 break;
             case 1:
-                adRichads();
+                adDirectLink();
                 sendWatchAdRequest();
                 adType = 2
                 break;
             case 2:
-                adDirectLink();
+                adDirectLink2();
                 sendWatchAdRequest();
                 adType = 0
                 break;
