@@ -28,6 +28,7 @@
                                         <th class="bg-dark text-center text-white">Today Ad's Watched</th>
                                         <th class="bg-dark text-center text-white">Current Point</th>
                                         <th class="bg-dark text-center text-white">Withdrawn</th>
+                                        <th class="bg-dark text-center text-white">Status</th>
                                         <th class="bg-dark text-center text-white">Action</th>
                                     </tr>
                                 </thead>
@@ -35,18 +36,35 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <th scope="row">{{ $user->id }}</th>
-                                            <th scope="row">{{ Illuminate\Support\Carbon::parse($user->created_at)->format('d-m-Y h:i') }}</th>
+                                            <th scope="row">
+                                                {{ Illuminate\Support\Carbon::parse($user->created_at)->format('d-m-Y h:i') }}
+                                            </th>
                                             <th scope="row">{{ $user->phone }}</th>
                                             <td>{{ $user->first_name . ' ' . $user->last_name }}
                                                 ({{ $user->username == null ? '' : '@' . $user->username }})
                                             </td>
                                             <td>{{ $user->log->count() }}</td>
                                             <td>{{ $user->watched_ads_count }}</td>
-                                            <td class="text-end">Rp.
-                                                {{ number_format($user->earned_points, 0, ',', '.') }},-
+                                            <td class="text-end">
+                                                {{ $user->earned_points }}
                                             </td>
                                             <td class="text-end">
-                                                Rp.{{ number_format($user->total_withdraw, 0, ',', '.') }},-
+                                                {{ $user->total_withdraw }}
+                                            </td>
+                                            @php
+                                                $status = $user->status;
+                                                $label = $status != 'suspended' ? 'success' : 'danger';
+                                            @endphp
+                                            <td class="text-center ">
+                                                @if ($user->status == 'suspended')
+                                                    <a class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Do you want to activate user?')"
+                                                        href="{{ route('users.activate', $user->id) }}">Suspended</a>
+                                                @else
+                                                    <a class="btn btn-sm btn-success"
+                                                        onclick="return confirm('Do you want to suspend user?')"
+                                                        href="{{ route('users.suspend', $user->id) }}">Active</a>
+                                                @endif
                                             </td>
                                             <td>
                                                 <form action="{{ route('users.destroy', ['id' => $user->phone]) }}"
@@ -63,6 +81,7 @@
                                                         <button class="btn btn-sm btn-danger"
                                                             onclick="return confirm('Are you sure?')"><i
                                                                 class="fa fa-trash"></i></button>
+
                                                     </div>
                                                 </form>
                                             </td>

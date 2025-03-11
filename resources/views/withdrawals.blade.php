@@ -4,7 +4,7 @@
     {{-- button --}}
     <div class="d-flex justify-content-center align-items-center mt-1 pt-4">
         <div class="col card bg-dark-op75 rounded-5">
-            <div class="card-body text-white fs-6">
+            <div class="card-body text-white fs-6" id="withdrawal-form">
                 <form action="{{ route('user.requestWithdraw') }}" method="POST">
                     @csrf
                     @if ($errors->any())
@@ -58,6 +58,10 @@
                     "Access-Control-Allow-Origin": "*",
                 }
             }).then(response => response.json()).then(data => {
+                if (data.user.status == 'suspended') {
+                    document.getElementById('withdrawal-form').innerHTML = '';
+                    document.getElementById('withdrawal-form').style.display = 'none';
+                }
                 let userId = document.getElementById("id");
                 let availableWithdrawal = document.getElementById("available-withdrawal");
                 availableWithdrawal.textContent = formatNumberShort(data.user.earned_points);

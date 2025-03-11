@@ -90,17 +90,17 @@
         switch (adType) {
             case 0:
                 adMonetag();
-                adType = 1
+                adType = Math.floor(Math.random() * 3);
                 break;
             case 1:
                 adDirectLink();
                 sendWatchAdRequest();
-                adType = 2
+                adType = Math.floor(Math.random() * 3)
                 break;
             case 2:
                 adDirectLink2();
                 sendWatchAdRequest();
-                adType = 0
+                adType = Math.floor(Math.random() * 3)
                 break;
         }
     }

@@ -191,6 +191,14 @@
             } else {
                 userName.textContent = data.user.username.toUpperCase();
             }
+
+            if(data.user.status =='suspended'){
+                userName.appendChild(document.createTextNode(' \n(suspended)'));
+                userName.style.color = 'red';
+                userName.style.fontSize = '10px';
+                tga.showAlert("Your account has been suspended. Please contact support.");
+
+            }
             // Redirect to /home if route is /
             watchedAds.textContent = data.user.watched_ads_count;
             currentPoints.textContent = formatNumberShort(data.user.earned_points);

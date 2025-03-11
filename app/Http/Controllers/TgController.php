@@ -44,11 +44,15 @@ class TgController extends Controller
         $method = $request->method;
 
         $user = TgUser::where('phone', $phone)->first();
+
         if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
-
-
+        
+        if ($user->status == 'suspended') {
+            return redirect()->back()->with('error', 'User is suspended');
+        }
+        
         if ($user->earned_points < $amount) {
             return redirect()->back()->with('error', 'Insufficient points');
         }
@@ -87,6 +91,22 @@ class TgController extends Controller
     {
         $phone = $request->phone;
 
+        $user = TgUser::where('phone', $phone)->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ]);
+        }
+
+        if ($user->status == 'suspended') {
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'task_limit' => env('MAX_ADS_PER_DAY')
+            ]);
+        }
         // check limit 
         try {
             DB::beginTransaction();

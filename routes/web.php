@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TgController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,11 +31,14 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard/users', [DashboardController::class,'users'])->name('dashboard.users');
-    Route::get('/dashboard/users/reset/{id}', [DashboardController::class,'resetUser'])->name('users.reset');
-    Route::post('/dashboard/users/bonus', [DashboardController::class,'giveBonus'])->name('users.bonus');
-    Route::delete('/dashboard/users/destroy/{id}', [DashboardController::class,'destroy_user'])->name('users.destroy');
-    Route::get('/recalculate', [DashboardController::class,'recalculate'])->name('recalculate');
+
+    Route::get('/dashboard/users', [UserController::class,'users'])->name('dashboard.users');
+    Route::get('/dashboard/users/reset/{id}', [UserController::class,'resetUser'])->name('users.reset');
+    Route::post('/dashboard/users/bonus', [UserController::class,'giveBonus'])->name('users.bonus');
+    Route::delete('/dashboard/users/destroy/{id}', [UserController::class,'destroy_user'])->name('users.destroy');
+    Route::get('/recalculate', [UserController::class,'recalculate'])->name('recalculate');
+    Route::get('/dashboard/user/suspend/{id}', [UserController::class,'suspend'])->name('users.suspend');
+    Route::get('/dashboard/user/activate/{id}', [UserController::class,'activate'])->name('users.activate');
     
     // withdraw
     Route::get('/dashboard/withdrawals', [WithdrawController::class,'index'])->name('dashboard.withdrawals');
