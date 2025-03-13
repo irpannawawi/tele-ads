@@ -21,6 +21,7 @@
         <table class="table table-hover ">
             <thead>
                 <tr class="bg-dark">
+                    <th>#</th>
                     <th>Date</th>
                     <th>Amount</th>
                     <th>Status</th>
@@ -70,6 +71,7 @@
                         label = 'danger'
                     }
                     list += `<tr>
+                            <td>${data[i].id}</td>
                             <td>${new Date(data[i].created_at).toLocaleString()}</td>
                             <td nowrap>Rp. ${new Intl.NumberFormat('id-ID', { style: 'decimal' }).format(data[i].amount)}</td>
                             <td class="text-${label}">${data[i].status}</td>

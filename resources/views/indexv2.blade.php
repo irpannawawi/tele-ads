@@ -75,7 +75,7 @@
 
     <div class="d-flex justify-content-center mt-2">
         <div class="p-1">
-            <a href="https://t.me/cuanads">
+            <a href="https://t.me/bayarcuanads">
 
                 <span class="fw-bold text-white badge bg-primary  rounded-pill p-4 py-3 fs-4">
                     Bukti Pembayaran
@@ -83,18 +83,20 @@
             </a>
         </div>
     </div>
+    
 
     <script>
         let btnWatch = document.getElementById('btnWatch')
         let countdown = document.getElementById('countdown')
         let btnCountdown = document.getElementById('btnCountdown')
-
+        let interval;
         function showTimeout(time) {
             btnWatch.classList.add('d-none');
             btnCountdown.classList.remove('d-none');
 
             // update interval
-            let interval = setInterval(() => {
+            
+            interval = setInterval(() => {
                 time -= 1;
                 countdown.innerHTML = time;
                 if (time == 0) {

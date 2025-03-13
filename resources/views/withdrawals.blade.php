@@ -62,6 +62,26 @@
                     document.getElementById('withdrawal-form').innerHTML = '';
                     document.getElementById('withdrawal-form').style.display = 'none';
                 }
+
+                // check wallet address
+                let warning = document.createElement('p');
+                warning.classList.add('text-danger');
+                warning.style.fontSize = '12px';
+                if (data.user.wallet_address != null) {
+                    let tujuan = document.getElementById('tujuan')
+                    let metode = document.getElementById('metode')
+                    tujuan.value = data.user.wallet_address;
+                    metode.value = data.user.wallet_network; 
+                    tujuan.disabled = true;
+                    metode.disabled = true;
+                    document.getElementById('withdrawal-form').prepend(warning);
+                    warning.textContent = 'Hubungi admin untuk melakukan perubahan alamat e-wallet anda.';
+                }else{
+                    document.getElementById('withdrawal-form').prepend(warning);
+                    warning.textContent = 'Akun e-wallet belum terdaftar silahkan isi alamat e-wallet terlebih dahulu untuk pertama kali. Harap diingat bahwa setelah anda mengisi alamat e-wallet anda tidak dapat mengubahnya lagi. Hubungi admin untuk melakukan perubahan alamat e-wallet anda.';
+                }
+
+
                 let userId = document.getElementById("id");
                 let availableWithdrawal = document.getElementById("available-withdrawal");
                 availableWithdrawal.textContent = formatNumberShort(data.user.earned_points);

@@ -5,14 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cuan Ads Rewards</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
     
     <script>
         // setup 
         const tga = window.Telegram.WebApp;
+
         tga.setBottomBarColor('#000000');
         tga.setHeaderColor('#000000');
-        tga.colorScheme='dark';
+        tga.colorScheme = 'dark';
     </script>
     <script>
         window.addEventListener('load', function() {
@@ -20,9 +21,9 @@
             initdata.headerColor = '#00FF00';
         })
     </script>
-    {{-- @include('components.richads') --}}
-    
-    
+    @include('components.richads')
+
+
     <link rel="preload" href="{{ asset('assets/img/background.jpg') }}" as="image">
     <link rel="preload" href="{{ asset('assets/img/icon_klik.png') }}" as="image">
     <link rel="preload" href="{{ asset('assets/icon/watch.png') }}" as="image">
@@ -31,8 +32,8 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-   @stack('css')
-   <style>
+    @stack('css')
+    <style>
         .bg-dark-op50 {
             background-color: rgba(0, 0, 0, 0.418);
             /* Hitam dengan opacity 50% */
@@ -73,17 +74,21 @@
             z-index: 1;
         }
 
-        #btnWatch, #btnCountdown {
+        #btnWatch,
+        #btnCountdown {
             width: 300px;
             height: 300px;
             margin: 0px auto;
         }
-        #btnCountdown >img{
+
+        #btnCountdown>img {
             opacity: 0.4;
         }
-        #btnCountdown>span{
+
+        #btnCountdown>span {
             left: 10%;
         }
+
         #btnWatch>img:active {
             transform: translateY(6px);
         }
@@ -120,6 +125,7 @@
             background-color: rgba(0, 0, 0, 0.438);
             margin: 0px 30px 0px 30px;
         }
+
         .progress-bar {
             background-color: #b38807;
             /* background-color: #206d01; */
@@ -138,7 +144,15 @@
         @include('layouts.bottom-nav')
         @include('components.tutorial')
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+        @if (env('APP_ENV') == 'production')
+            if (tga.platform == "tdesktop" || tga.platform == "weba" || tga.platform == "web") {
+                document.getElementsByTagName('body')[0].innerHTML =
+                    "<h1>Untuk melanjutkan silahkan buka aplikasi ini melalui smartphone.</h1>";
+            }
+        @endif
         function formatNumberShort(num) {
             return new Intl.NumberFormat("id-ID", {
                 style: "currency",
@@ -151,7 +165,6 @@
     @include('components.function.nativebanner')
     @include('components.function.watch-ads')
     <script>
-        
         let WATCHED_ADS_TODAY;
         let TASK_LIMIT;
         // Expand WebApp to full height
@@ -182,7 +195,7 @@
             let totalIncome = document.getElementById("total-income")
             WATCHED_ADS_TODAY = data.user.watched_ads_count;
             TASK_LIMIT = data.task_limit;
-        
+
 
             // set value
             userImage.src = userData.photo_url;
@@ -192,7 +205,7 @@
                 userName.textContent = data.user.username.toUpperCase();
             }
 
-            if(data.user.status =='suspended'){
+            if (data.user.status == 'suspended') {
                 userName.appendChild(document.createTextNode(' \n(suspended)'));
                 userName.style.color = 'red';
                 userName.style.fontSize = '10px';
@@ -274,6 +287,7 @@
     </script>
 
     @stack('js')
+
 </body>
 
 </html>

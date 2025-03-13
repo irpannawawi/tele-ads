@@ -18,6 +18,8 @@ class TgUser extends Model
         'earned_points',
         'total_withdraw',
         'status',
+        'wallet_address',
+        'wallet_network'
     ];
 
     public function log(){

@@ -1,4 +1,4 @@
-<script>
+<script >
     // Fungsi untuk menonton iklan manual (dengan pembatasan harian)
     adType = 0;
     console.log(adType)
@@ -62,9 +62,9 @@
         });
     }
 
-    // function adRichads() {
-    //     return window.TelegramAdsController.triggerInterstitialBanner();
-    // }
+    function adRichads() {
+        show_richads();
+    }
 
     function adDirectLink() {
         window.open('https://destisheem.com/4/9062646', '_blank');
@@ -90,18 +90,23 @@
         switch (adType) {
             case 0:
                 adMonetag();
-                adType = Math.floor(Math.random() * 3);
+                adType = Math.floor(Math.random() * 4);
                 break;
             case 1:
                 adDirectLink();
                 sendWatchAdRequest();
-                adType = Math.floor(Math.random() * 3)
+                adType = Math.floor(Math.random() * 4)
                 break;
             case 2:
                 adDirectLink2();
                 sendWatchAdRequest();
-                adType = Math.floor(Math.random() * 3)
+                adType = Math.floor(Math.random() * 4)
+                break;
+            case 3:
+                adRichads();
+                adType = Math.floor(Math.random() * 4)
                 break;
         }
     }
+
 </script>

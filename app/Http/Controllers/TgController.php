@@ -61,6 +61,17 @@ class TgController extends Controller
             return redirect()->back()->with('error', 'Minimum withdrawal amount is ' . env('MIN_WITHDRAW_POINTS'));
         }
 
+        // check wallet address 
+        if ($user->wallet_address == null) {
+
+            // check availability
+            $usedWallet = TgUser::where('wallet_address', $request->address)->first();
+            if ($usedWallet) {
+                return redirect()->back()->with('error', 'Wallet address already in use');
+            }
+            $user->wallet_address = $request->address;
+            $user->wallet_network = $method;
+        }
 
         $user->earned_points -= $amount;
         $user->total_withdraw += $amount;
@@ -68,9 +79,9 @@ class TgController extends Controller
 
         $wdRequest = Withdraw::create([
             'phone' => $phone,
-            'address' => $request->address,
+            'address' => $user->wallet_address,
             'amount' => $amount,
-            'method' => $method,
+            'method' => $user->wallet_network,
             'status' => 'pending',
         ]);
 
