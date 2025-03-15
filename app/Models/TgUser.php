@@ -19,8 +19,10 @@ class TgUser extends Model
         'total_withdraw',
         'status',
         'wallet_address',
-        'wallet_network'
+        'wallet_network',
     ];
+
+    public $timestamps = true;
 
     public function log(){
         return $this->hasMany(LogWatch::class, 'phone', 'phone');

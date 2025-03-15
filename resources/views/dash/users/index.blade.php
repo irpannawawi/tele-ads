@@ -17,7 +17,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-sm table-hover table-bordered datatable-desc">
+                            <table class="table table-sm table-hover table-bordered" id="userTable">
                                 <thead>
                                     <tr>
                                         <th class="bg-dark text-center text-white">#</th>
@@ -32,7 +32,8 @@
                                         <th class="bg-dark text-center text-white">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody></tbody>
+                                {{-- <tbody>
                                     @foreach ($users as $user)
                                         <tr>
                                             <th scope="row">{{ $user->id }}</th>
@@ -87,7 +88,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                </tbody> --}}
                             </table>
                         </div>
                     </div>
@@ -95,10 +96,68 @@
             </div>
         </div>
     </div>
-    @include('dash.users.gift-modal')
+    {{-- @include('dash.users.gift-modal') --}}
     <script>
         function changegiftId(id) {
             $('#gift_user_id').val(id);
         }
     </script>
+
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                $('#userTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('dt.users') }}",
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'created_at',
+                            name: 'created_at'
+                        },
+                        {
+                            data: 'phone',
+                            name: 'phone'
+                        },
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'watched_ads_count',
+                            name: 'watched_ads_count'
+                        },
+                        {
+                            data: 'today_watched',
+                            name: 'today_watched'
+                        },
+                        {
+                            data: 'earned_points',
+                            name: 'earned_points'
+                        },
+                        {
+                            data: 'total_withdraw',
+                            name: 'total_withdraw'
+                        },
+                        {
+                            data: 'status',
+                            name: 'status'
+                        },
+                        {
+                            data: 'action',
+                            name: 'action'
+                        },
+                    ],
+                    order: [
+                        [0, 'desc']
+                    ],
+                    pageLength: 25,
+
+                });
+            });
+        </script>
+    @endpush
 @endsection

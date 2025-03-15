@@ -22,7 +22,6 @@ Route::post('/watch/adsgram/{id}',[TgController::class,'watchAdsgram'])->name('u
 Route::post('/limit_check', [TgController::class,'limitCheck'])->name('user.limitCheck');
 Route::get('/dashboard', [DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/inviteinactivuserowiurkjkasdjahliwuehaksdjaheiuur', [DashboardController::class,'inviteInactiveUser']);
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -31,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-
+    
     Route::get('/dashboard/users', [UserController::class,'users'])->name('dashboard.users');
     Route::get('/dashboard/users/reset/{id}', [UserController::class,'resetUser'])->name('users.reset');
     Route::post('/dashboard/users/bonus', [UserController::class,'giveBonus'])->name('users.bonus');
@@ -56,5 +55,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/administrator/delete/{id}', [AdministratorController::class,'destroy'])->name('administrator.destroy');
     Route::get('/dashboard/administrator/create', [AdministratorController::class,'create'])->name('administrator.create');
     Route::post('/dashboard/administrator/store', [AdministratorController::class,'store'])->name('administrator.store');
+    
+    // Datatabels
+    Route::get('/dashboard/data/users', [UserController::class,'dtusers'])->name('dt.users');
+    Route::get('/dashboard/data/logs', [LogController::class,'dtLogs'])->name('dt.logs');
+
 });
 require __DIR__.'/auth.php';

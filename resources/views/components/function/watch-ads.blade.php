@@ -67,12 +67,9 @@
     }
 
     function adDirectLink() {
-        window.open('https://destisheem.com/4/9062646', '_blank');
+        window.open('https://tecmugheksoa.com/4/9082169', '_blank');
     }
 
-    function adDirectLink2() {
-        window.open('https://suggestbingo.com/hfwfwc2gfz?key=29731af3edcb8907d1c27d4986b092cd', '_blank');
-    }
 
 
     function watchAd() {
@@ -90,21 +87,16 @@
         switch (adType) {
             case 0:
                 adMonetag();
-                adType = Math.floor(Math.random() * 4);
+                adType = Math.floor(Math.random() * 3);
                 break;
             case 1:
                 adDirectLink();
                 sendWatchAdRequest();
-                adType = Math.floor(Math.random() * 4)
+                adType = Math.floor(Math.random() * 3)
                 break;
             case 2:
-                adDirectLink2();
-                sendWatchAdRequest();
-                adType = Math.floor(Math.random() * 4)
-                break;
-            case 3:
                 adRichads();
-                adType = Math.floor(Math.random() * 4)
+                adType = Math.floor(Math.random() * 3)
                 break;
         }
     }

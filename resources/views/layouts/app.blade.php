@@ -19,9 +19,33 @@
     <link rel="icon" type="image/svg+xml" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRyzK1kvRVmaShmJ9hUlp7JWfFsUDcUrX2pb3vL37fqVzuXDcgWqALoOgtnsMZ5Xk759z4YscjP5XrhNEs_pTcouE-RfvKd5ZJaHlrCLyDJWp7x5TBVXH93TUYhZpJj0ZmuctMIkCRkvNAFq_nUI8BbNwW0CVAS1AQOu0hnCEfZzvhYLCWm2Goc-TjIf0r/s1600/favicon-CpiEVG3S.png" />
     <!-- Custom styles for this template-->
     <link href="{{ asset('sb-admin') }}/css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        div.dt-container .dt-paging .dt-paging-button{
+            padding: 0px;
+            margin: 0px;
+            margin-top: 10px;
+        }
+        .page-link{
+            padding: 0px;
+            margin: 0px;
+            border: 1px solid #ccc;
+        }
+        table{
+            font-size: 13px;
+            color: black;
+        }
+        table > tbody > tr > td {
+            color: #000000;
+        }
+        table > tbody > tr > td > .btn-group-sm>.btn, .btn-sm{
+            font-size: 13px;
+            padding: 2px 4px 2px 4px;
+            margin: 0px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -156,6 +180,8 @@
         @endif
 
     </script>
+
+    @stack('scripts')
 </body>
 
 </html>

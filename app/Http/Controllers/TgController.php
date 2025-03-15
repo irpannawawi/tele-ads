@@ -48,11 +48,11 @@ class TgController extends Controller
         if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
-        
+
         if ($user->status == 'suspended') {
             return redirect()->back()->with('error', 'User is suspended');
         }
-        
+
         if ($user->earned_points < $amount) {
             return redirect()->back()->with('error', 'Insufficient points');
         }
@@ -195,13 +195,20 @@ class TgController extends Controller
             'first_name' => 'required',
         ]);
         $phone = $request->phone;
-        TgUser::updateOrInsert([
-            'phone' => $request->phone
-        ], [
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'username' => $request->username,
-        ]);
+
+        $user = TgUser::where('phone', $phone)->first();
+        if (!$user) {
+
+            $user = TgUser::create([
+                'phone' => $request->phone,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'username' => $request->username,
+                'status' => 'active',
+            ]);
+
+        }
+
         $log = LogWatch::where('phone', $request->phone);
         $withdraw = Withdraw::where('phone', $phone);
         $this->updateAdsView($request->phone);
@@ -230,10 +237,6 @@ class TgController extends Controller
             'withdraw' => Withdraw::where('phone', $phone)->orderBy('created_at', 'desc')->get(),
         ]);
     }
-
-
-
-
 
 
     public function limitCheck(Request $request)
