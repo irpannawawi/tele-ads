@@ -100,8 +100,8 @@ class UserController extends Controller
         }
         
         array_push($recipients, env('ADMIN_USER_ID'));
-
-        foreach ($inactiveUser as $u) {
+        $recipients = array_unique($recipients);
+        foreach ($recipients as $u) {
             SendTelegramMessage::dispatch($u, $request->message);
         }
 
