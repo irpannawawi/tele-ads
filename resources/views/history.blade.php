@@ -85,6 +85,8 @@
                     ],
                     "lengthChange": false
                 });
+
+                removeLoader();
             })
         });
     </script>

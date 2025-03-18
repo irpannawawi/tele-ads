@@ -12,8 +12,11 @@
                         <div class="card-title">
                             <i class="fab fa-telegram"></i> Telegram Users
                         </div>
-                        <a href="{{ route('recalculate') }}" class="btn btn-sm btn-primary"
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#broadcastModal">Broadcast Message</button>
+                            <a href="{{ route('recalculate') }}" class="btn btn-sm btn-warning pt-2"
                             onclick="return confirm('Are you sure?')">Refresh</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -28,6 +31,8 @@
                                         <th class="bg-dark text-center text-white">Today Ad's Watched</th>
                                         <th class="bg-dark text-center text-white">Current Point</th>
                                         <th class="bg-dark text-center text-white">Withdrawn</th>
+                                        <th class="bg-dark text-center text-white">Wallet Address</th>
+                                        <th class="bg-dark text-center text-white">Wallet Network</th>
                                         <th class="bg-dark text-center text-white">Status</th>
                                         <th class="bg-dark text-center text-white">Action</th>
                                     </tr>
@@ -96,7 +101,9 @@
             </div>
         </div>
     </div>
-    {{-- @include('dash.users.gift-modal') --}}
+    @include('dash.users.gift-modal')
+    @include('dash.users.broadcast-modal')
+
     <script>
         function changegiftId(id) {
             $('#gift_user_id').val(id);
@@ -127,8 +134,8 @@
                             name: 'name'
                         },
                         {
-                            data: 'watched_ads_count',
-                            name: 'watched_ads_count'
+                            data: 'total_watched',
+                            name: 'total_watched'
                         },
                         {
                             data: 'today_watched',
@@ -141,6 +148,14 @@
                         {
                             data: 'total_withdraw',
                             name: 'total_withdraw'
+                        },
+                        {
+                            data: 'wallet_address',
+                            name: 'wallet_address'
+                        },
+                        {
+                            data: 'wallet_network',
+                            name: 'wallet_network'
                         },
                         {
                             data: 'status',

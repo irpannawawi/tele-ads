@@ -1,6 +1,8 @@
 @extends('layouts.public')
 
 @section('content')
+@include('components.richads')
+
     <div class="row mt-4 mb-1">
         <div class="d-flex justify-content-between px-1 card-row">
             <div class="p-1  w-100 card-bg-main ">
@@ -116,4 +118,5 @@
 
         btnWatch.addEventListener('click', disableBtn)
     </script>
+    @include('components.giga-ads')
 @endsection

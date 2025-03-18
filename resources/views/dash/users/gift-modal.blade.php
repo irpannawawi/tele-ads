@@ -11,7 +11,7 @@
         <form action="{{ route('users.bonus') }}" method="POST">
         <div class="modal-body">
             @csrf
-            <input type="hidden" id="gift_user_id" name="user_id" value="{{ $user->id }}">
+            <input type="hidden" id="gift_user_id" name="user_id" value="" required>
             <input type="number" name="amount" placeholder="Amount" value="" class="form-control" required>
         </div>
         <div class="modal-footer">

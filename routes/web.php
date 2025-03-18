@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/recalculate', [UserController::class,'recalculate'])->name('recalculate');
     Route::get('/dashboard/user/suspend/{id}', [UserController::class,'suspend'])->name('users.suspend');
     Route::get('/dashboard/user/activate/{id}', [UserController::class,'activate'])->name('users.activate');
+    Route::post('/dashboard/user/broadcast', [UserController::class,'broadcast'])->name('users.broadcast');
     
     // withdraw
     Route::get('/dashboard/withdrawals', [WithdrawController::class,'index'])->name('dashboard.withdrawals');

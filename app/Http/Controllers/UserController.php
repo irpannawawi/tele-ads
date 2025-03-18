@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\InviteJob;
+use App\Jobs\SendTelegramMessage;
 use App\Models\LogWatch;
 use App\Models\TgUser;
 use App\Models\Withdraw;
@@ -80,7 +82,32 @@ class UserController extends Controller
         Withdraw::where('phone', $user->phone)->delete();
         return redirect()->back()->with('error', 'User reset successfully');
     }
+    public function broadcast(Request $request){
+        $recipients = $request->recipients;
 
+        $activeUser = LogWatch::where('created_at', '>=', Carbon::now()->startOfDay())->distinct('phone')->pluck('phone')->toArray();
+
+        $inactiveUser = TgUser::whereNotIn('phone', $activeUser)->pluck('phone')->toArray();
+        
+        if ($recipients == 0) {
+            $recipients = array_merge($inactiveUser, $activeUser);
+        }elseif ($recipients == 1) {
+            $recipients = $inactiveUser;
+        }elseif ($recipients == 2) {
+            $recipients = $activeUser;
+        }elseif ($recipients == 3) {
+            $recipients = explode(',', $request->specific_addresses);
+        }
+        
+        array_push($recipients, env('ADMIN_USER_ID'));
+
+        foreach ($inactiveUser as $u) {
+            SendTelegramMessage::dispatch($u, $request->message);
+        }
+
+        return redirect()->back()->with('success', 'Message sent successfully');
+
+    }
 
     // datatables
     public function dtusers(Request $request)
@@ -105,7 +132,9 @@ class UserController extends Controller
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <input type="hidden" name="_token" value="' . csrf_token() . '">
                                                     <div class="btn-group">
-                                                        
+                                                        <button type="button" class="btn btn-sm btn-success"
+                                                            onclick="changegiftId('.$row->id .')" data-toggle="modal"
+                                                            data-target="#giftModal"><i class="fa fa-gift"></i></button>
                                                         <a class="btn btn-sm btn-warning"
                                                             onclick="return confirm(\'Are you sure?\')"
                                                             href="' . route('users.reset', $row->id) . '">Reset</a>
@@ -124,6 +153,9 @@ class UserController extends Controller
             })
             ->addColumn('today_watched', function ($row) {
                 return LogWatch::where('phone', $row->phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
+            })
+            ->addColumn('total_watched', function ($row) {
+                return $row->log->count();
             })
             ->addColumn('status', function ($row) {
                 if ($row->status == 'active' || $row->status == null) {

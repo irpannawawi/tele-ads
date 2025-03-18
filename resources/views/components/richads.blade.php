@@ -2,20 +2,23 @@
 <script>
     window.TelegramAdsController = new TelegramAdsController();
     window.TelegramAdsController.initialize({
-        pubId: "358310",
-        appId: "1693",
+        pubId: "963604",
+        appId: "1791",
     });
 
 
     function show_richads() {
-        window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
+        window.TelegramAdsController.triggerNativeNotification().then((result) => {
+            localStorage.setItem("richads_watched", new Date().getDate());
             sendWatchAdRequest();
+
         }).catch((result) => {
-            let btnWatch = document.getElementById('btnWatch')
-            let btnCountdown = document.getElementById('btnCountdown')
-            btnWatch.classList.remove('d-none');
-            btnCountdown.classList.add('d-none');
-            clearInterval(interval);
+            adMonetag()
+            // let btnWatch = document.getElementById('btnWatch')
+            // let btnCountdown = document.getElementById('btnCountdown')
+            // btnWatch.classList.remove('d-none');
+            // btnCountdown.classList.add('d-none');
+            // clearInterval(interval);
         });
 
     }

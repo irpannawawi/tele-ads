@@ -1,4 +1,4 @@
-<script >
+<script>
     // Fungsi untuk menonton iklan manual (dengan pembatasan harian)
     adType = 0;
     console.log(adType)
@@ -63,13 +63,31 @@
     }
 
     function adRichads() {
-        show_richads();
+        if (localStorage.getItem("richads_watched") != null && localStorage.getItem("richads_watched") < new Date().getDate()) {
+            adMonetag();
+        } else {
+            show_richads();
+        }
     }
 
     function adDirectLink() {
         window.open('https://tecmugheksoa.com/4/9082169', '_blank');
     }
 
+    function adGigapub() {
+        window.showGiga()
+            .then(() => {
+                sendWatchAdRequest();
+            })
+            .catch(e => {
+                let btnWatch = document.getElementById('btnWatch')
+                let btnCountdown = document.getElementById('btnCountdown')
+                btnWatch.classList.remove('d-none');
+                btnCountdown.classList.add('d-none');
+                clearInterval(interval);
+            });
+
+    }
 
 
     function watchAd() {
@@ -87,18 +105,21 @@
         switch (adType) {
             case 0:
                 adMonetag();
-                adType = Math.floor(Math.random() * 3);
+                adType = Math.floor(Math.random() * 4);
                 break;
             case 1:
                 adDirectLink();
                 sendWatchAdRequest();
-                adType = Math.floor(Math.random() * 3)
+                adType = Math.floor(Math.random() * 4)
                 break;
             case 2:
                 adRichads();
-                adType = Math.floor(Math.random() * 3)
+                adType = Math.floor(Math.random() * 4)
+                break;
+            case 3:
+                adGigapub();
+                adType = Math.floor(Math.random() * 4)
                 break;
         }
     }
-
 </script>

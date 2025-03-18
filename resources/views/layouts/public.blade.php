@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cuan Ads Rewards</title>
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
-    
+
     <script>
         // setup 
         const tga = window.Telegram.WebApp;
@@ -21,7 +21,6 @@
             initdata.headerColor = '#00FF00';
         })
     </script>
-    @include('components.richads')
 
 
     <link rel="preload" href="{{ asset('assets/img/background.jpg') }}" as="image">
@@ -135,7 +134,19 @@
 
 <body>
 
-    <div class="container bg-main vh-100 mb-3">
+
+    {{-- loading screen --}}
+    <div class="loading-screen bg-main vh-100 d-flex justify-content-center align-items-center" id="loading-screen">
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-white">Loading...</p>
+        </div>
+    </div>
+
+    {{-- content --}}
+    <div class="container bg-main vh-100 mb-3 d-none" id="content">
         @include('layouts.navbar')
         {{-- @yield('content') --}}
 
@@ -146,6 +157,31 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyB5BVX1cyBM8vFf5VadGCemtTMO5YWKRrg",
+          authDomain: "cuanads-98303.firebaseapp.com",
+          projectId: "cuanads-98303",
+          storageBucket: "cuanads-98303.firebasestorage.app",
+          messagingSenderId: "2973515536",
+          appId: "1:2973515536:web:d68de9f81580c11ae16f95",
+          measurementId: "G-8W79W7B80Q"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+      
     <script>
         @if (env('APP_ENV') == 'production')
             if (tga.platform == "tdesktop" || tga.platform == "weba" || tga.platform == "web") {
@@ -232,7 +268,13 @@
                 watchAd();
             });
 
+            removeLoader();
         });
+
+        function removeLoader() {
+            document.getElementById("loading-screen").classList.add("d-none");
+            document.getElementById("content").classList.remove("d-none");
+        }
     </script>
 
 

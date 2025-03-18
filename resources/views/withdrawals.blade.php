@@ -72,8 +72,8 @@
                     let metode = document.getElementById('metode')
                     tujuan.value = data.user.wallet_address;
                     metode.value = data.user.wallet_network; 
-                    tujuan.disabled = true;
-                    metode.disabled = true;
+                    tujuan.readonly = true;
+                    metode.readonly = true;
                     document.getElementById('withdrawal-form').prepend(warning);
                     warning.textContent = 'Hubungi admin untuk melakukan perubahan alamat e-wallet anda.';
                 }else{
@@ -89,7 +89,7 @@
                 if (userId.value != '') {
                     document.getElementById('btnSubmit').classList.remove('disabled');
                 }
-
+                removeLoader();
             });
         })
     </script>
