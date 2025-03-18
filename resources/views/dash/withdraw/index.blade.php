@@ -54,8 +54,11 @@
                                             <td class="text-end">
                                                 <div class="btn-group {{ $item->status!='pending'?'d-none':''}}">
                                                     <a href="{{route('withdraw.approve',[$item->id])}}" class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')"><i class="fas fa-check"></i></a>
-                                                    <a href="{{route('withdraw.reject',[$item->id])}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fas fa-times"></i></a>
+                                                    <button class="btn btn-danger btn-sm" onclick="reject({{$item->id}})" data-toggle="modal" data-target="#rejectModal"><i class="fas fa-times"></i></button>
                                                 </div>
+                                                @if($item->status=='approved')
+                                                <a href="{{ route('withdraw.resend',[$item->id]) }}" class="btn btn-info btn-sm" onclick="return confirm('Are you sure?') }}"><i class="fa fa-paper-plane"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -67,4 +70,40 @@
             </div>
         </div>
     </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ route('withdraw.reject') }}" method="POST">
+            @csrf
+            <input type="text" name="id" id="id-wd" hidden="true">
+            <textarea name="reason" id="reason" class="form-control"></textarea>
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" value="true" name="refund" id="refundCheckbox">
+                <label class="form-check-label" for="refundCheckbox">
+                  Refund Balance
+                </label>
+              </div>
+            <button type="submit" class="btn btn-primary mt-2">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function reject(id) {
+      $('#rejectModal').modal('show');
+      $('#id-wd').val(id);
+    }
+  </script>
 @endsection

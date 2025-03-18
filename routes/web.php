@@ -43,7 +43,8 @@ Route::middleware('auth')->group(function () {
     // withdraw
     Route::get('/dashboard/withdrawals', [WithdrawController::class,'index'])->name('dashboard.withdrawals');
     Route::get('/dashboard/withdraw/approve/{id}', [WithdrawController::class,'approve'])->name('withdraw.approve');
-    Route::get('/dashboard/withdraw/reject/{id}', [WithdrawController::class,'reject'])->name('withdraw.reject');
+    Route::post('/dashboard/withdraw/reject', [WithdrawController::class,'reject'])->name('withdraw.reject');
+    Route::get('/dashboard/withdraw/resend/{id}', [WithdrawController::class,'resend'])->name('withdraw.resend');
     Route::get('/dashboard/logs', [LogController::class,'index'])->name('dashboard.logs');
     
     // settings
