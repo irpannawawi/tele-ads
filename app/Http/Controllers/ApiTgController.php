@@ -8,6 +8,7 @@ use App\Models\Withdraw;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class ApiTgController extends Controller
 {
@@ -22,6 +23,11 @@ class ApiTgController extends Controller
                 'success' => false,
                 'message' => 'User not found'
             ]);
+        }
+        // create token if null 
+        if (empty($user->token)) {
+            $user->token = Str::random(60);
+            $user->save();
         }
         return response()->json([
             'success' => true,
@@ -75,6 +81,7 @@ class ApiTgController extends Controller
         }
         $watcedToday = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
         $user->watched_ads_count = $watcedToday;
+        $user->updated_at = Carbon::now(); // Menambahkan secara eksplisit
         $user->save();
     }
 }

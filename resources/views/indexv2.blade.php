@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-@include('components.richads')
+    @include('components.richads')
 
     <div class="row mt-4 mb-1">
         <div class="d-flex justify-content-between px-1 card-row">
@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+
     <div class="row mt-2">
         <div class="d-flex justify-content-center align-items-center px-1">
             <div class="p-1  w-100  ">
@@ -85,19 +86,20 @@
             </a>
         </div>
     </div>
-    
+
 
     <script>
         let btnWatch = document.getElementById('btnWatch')
         let countdown = document.getElementById('countdown')
         let btnCountdown = document.getElementById('btnCountdown')
         let interval;
+
         function showTimeout(time) {
             btnWatch.classList.add('d-none');
             btnCountdown.classList.remove('d-none');
 
             // update interval
-            
+
             interval = setInterval(() => {
                 time -= 1;
                 countdown.innerHTML = time;

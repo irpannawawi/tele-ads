@@ -9,6 +9,7 @@ use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Telegram\Bot\Api;
 
 class TgController extends Controller
@@ -118,6 +119,12 @@ class TgController extends Controller
                 'task_limit' => env('MAX_ADS_PER_DAY')
             ]);
         }
+        if($user->token != $request->token){
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid token'
+            ]);
+        }
         // check limit 
         try {
             DB::beginTransaction();
@@ -136,6 +143,10 @@ class TgController extends Controller
             $user = TgUser::where('phone', $phone)->first();
             $user->watched_ads_count = LogWatch::where('phone', $phone)->where('created_at', '>=', Carbon::now()->startOfDay())->count();
             $user->earned_points += env('POINTS_PER_AD');
+            
+            // change user token
+            $user->token = Str::random(60); 
+            
             $user->save();
 
 
@@ -209,6 +220,11 @@ class TgController extends Controller
 
         }
 
+        // generate new token if empty
+        if (empty($user->token)) {
+            $user->token = Str::random(60);
+            $user->save();
+        }
         $log = LogWatch::where('phone', $request->phone);
         $withdraw = Withdraw::where('phone', $phone);
         $this->updateAdsView($request->phone);
@@ -223,12 +239,14 @@ class TgController extends Controller
 
     public function getUserByPhone($phone)
     {
-        TgUser::where([
-            'phone' => $phone
-        ])->first();
+        $user = TgUser::where('phone', $phone)->first();
         $log = LogWatch::where('phone', $phone);
         $withdraw = Withdraw::where('phone', $phone);
-
+            // generate new token if empty
+        if (empty($user->token)) {
+            $user->token = Str::random(60);
+            $user->save();
+        }
         return response()->json([
             'success' => true,
             'user' => TgUser::where('phone', $phone)->first(),

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cuan Ads Rewards</title>
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
-
+    <meta name="token" content="">
     <script>
         // setup 
         const tga = window.Telegram.WebApp;
@@ -31,6 +31,9 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    @include('components.oneclicka')
+    @include('components.mybid')
+    
     @stack('css')
     <style>
         .bg-dark-op50 {
@@ -136,13 +139,13 @@
 
 
     {{-- loading screen --}}
-    <div class="loading-screen bg-main vh-100 d-flex justify-content-center align-items-center" id="loading-screen">
+    {{-- <div class="loading-screen bg-main vh-100 d-flex justify-content-center align-items-center" id="loading-screen">
         <div class="text-center">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <p class="text-white">Loading...</p>
-        </div>
+        </div> --}}
     </div>
 
     {{-- content --}}
@@ -223,6 +226,10 @@
                 return;
             }
 
+
+            changeToken(data.user.token);
+            
+
             let userImage = document.getElementById("user-image");
             let userName = document.getElementById("user-name");
             let watchedAds = document.getElementById("watched-ads")
@@ -274,6 +281,14 @@
         function removeLoader() {
             document.getElementById("loading-screen").classList.add("d-none");
             document.getElementById("content").classList.remove("d-none");
+        }
+
+        function changeToken(token)
+        {
+            var pageToken = document.querySelector('[name="token"]');
+            if (pageToken) {
+                pageToken.setAttribute("content", token);
+            }
         }
     </script>
 

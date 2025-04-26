@@ -17,12 +17,21 @@ class DashboardController extends Controller
     public function index()
     {
         
+        $mined_today = LogWatch::whereDate('created_at', Carbon::today()->startOfDay())->count();
         $data = [
+            'mined_today' => $mined_today,
             'total_users' => TgUser::count(),
             'today_active_users' => LogWatch::whereDate('created_at', Carbon::today()->startOfDay())->distinct('phone')->count(),
             'pending_withdrawal' => Withdraw::where('status', 'pending')->sum('amount'),
             'all_credit' => TgUser::where('earned_points', '>=', env('MIN_WITHDRAW_POINTS'))->sum('earned_points'),
         ];
+
+        $start_date = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $end_date = Carbon::now()->endOfMonth()->format('Y-m-d');
+        foreach (Carbon::parse($start_date)->daysUntil($end_date) as $day) {
+            $data['chart']['mined_points'][$day->format('Y-m-d')] = LogWatch::whereDate('created_at', $day->format('Y-m-d'))->count();
+        }
+
         return view('dashboard', $data);
     }
 

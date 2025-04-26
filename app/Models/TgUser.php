@@ -20,6 +20,7 @@ class TgUser extends Model
         'status',
         'wallet_address',
         'wallet_network',
+        'token',
     ];
 
     public $timestamps = true;
