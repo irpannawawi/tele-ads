@@ -7,12 +7,40 @@ use App\Http\Controllers\TgController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TgController::class,'index'])->name('home');
 Route::get('/withdrawals', [TgController::class,'withdrawals'])->name('withdrawals');
 Route::get('/history', [TgController::class,'history'])->name('history');
 Route::post('/withdraw/request', [TgController::class,'requestWithdraw'])->name('user.requestWithdraw');
+
+Route::post('/updates5656', function (Request $request) {
+    $secret = 'Yangtautauaja';
+    $signature = $request->header('X-Hub-Signature-256');
+
+    if (!$signature) {
+        abort(403, 'No signature found.');
+    }
+
+    // Validate signature
+    $hash = 'sha256=' . hash_hmac('sha256', $request->getContent(), $secret);
+
+    if (!hash_equals($hash, $signature)) {
+        abort(403, 'Invalid signature.');
+    }
+
+    // Signature is valid -> run git pull
+    $output = [];
+    $return_var = 0;
+    
+    exec('git pull 2>&1', $output, $return_var);
+
+    return response()->json([
+        'status' => $return_var === 0 ? 'success' : 'error',
+        'output' => $output,
+    ]);
+});
 
 
 Route::post('/get_user',[TgController::class,'getUser'])->name('user.get');
