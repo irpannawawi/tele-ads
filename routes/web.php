@@ -16,19 +16,7 @@ Route::get('/history', [TgController::class,'history'])->name('history');
 Route::post('/withdraw/request', [TgController::class,'requestWithdraw'])->name('user.requestWithdraw');
 
 Route::post('/updates5656', function (Request $request) {
-    $secret = 'Yangtautauaja';
-    $signature = $request->header('X-Hub-Signature-256');
-
-    if (!$signature) {
-        abort(403, 'No signature found.');
-    }
-
-    // Validate signature
-    $hash = 'sha256=' . hash_hmac('sha256', $request->getContent(), $secret);
-
-    if (!hash_equals($hash, $signature)) {
-        abort(403, 'Invalid signature.');
-    }
+   
 
     // Signature is valid -> run git pull
     $output = [];
