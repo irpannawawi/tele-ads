@@ -313,6 +313,8 @@
             }).then(response => response.json()).then(data => {
                 if (data.success) {
                     window.location.reload();
+                }else{
+                    showAlert("Please contact support.");
                 }
             })
         }
