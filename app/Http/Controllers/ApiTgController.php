@@ -47,7 +47,8 @@ class ApiTgController extends Controller
     public function createUser(Request $request){
         $request->validate([
             'id' => 'required',
-            'first_name' => 'required'
+            'first_name' => 'required',
+            'username' => 'required',
         ]);
 
         $phone = $request->id;
