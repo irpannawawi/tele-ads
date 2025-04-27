@@ -139,13 +139,13 @@
 
 
     {{-- loading screen --}}
-    {{-- <div class="loading-screen bg-main vh-100 d-flex justify-content-center align-items-center" id="loading-screen">
+    <div class="loading-screen bg-main vh-100 d-flex justify-content-center align-items-center" id="loading-screen">
         <div class="text-center">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <p class="text-white">Loading...</p>
-        </div> --}}
+        </div>
     </div>
 
     {{-- content --}}
