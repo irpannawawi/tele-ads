@@ -15,20 +15,6 @@ Route::get('/withdrawals', [TgController::class,'withdrawals'])->name('withdrawa
 Route::get('/history', [TgController::class,'history'])->name('history');
 Route::post('/withdraw/request', [TgController::class,'requestWithdraw'])->name('user.requestWithdraw');
 
-Route::post('/updates5656', function (Request $request) {
-   
-
-    // Signature is valid -> run git pull
-    $output = [];
-    $return_var = 0;
-    
-    exec('git pull 2>&1', $output, $return_var);
-
-    return response()->json([
-        'status' => $return_var === 0 ? 'success' : 'error',
-        'output' => $output,
-    ]);
-});
 
 
 Route::post('/get_user',[TgController::class,'getUser'])->name('user.get');

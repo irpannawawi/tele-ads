@@ -10,3 +10,19 @@ Route::post('/user/create',[ApiTgController::class,'createUser'])->name('createU
 
 // Withdraw
 Route::post('/getWithdrawHistory', [ApiTgController::class,'getWithdrawHistory'])->name('getWithdrawHistory');
+
+
+Route::post('/updates5656', function (Request $request) {
+   
+
+    // Signature is valid -> run git pull
+    $output = [];
+    $return_var = 0;
+    
+    exec('git pull 2>&1', $output, $return_var);
+
+    return response()->json([
+        'status' => $return_var === 0 ? 'success' : 'error',
+        'output' => $output,
+    ]);
+});
